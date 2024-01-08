@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { nunitoSans } from "./fonts";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Modern Engineers (India)",
@@ -19,10 +21,10 @@ export default function RootLayout({
       >
         <div className="flex flex-col min-h-screen">
           {/* Navbar here */}
-          <header>Header</header>
+          <Header />
           <main className="flex-1 flex-grow">{children}</main>
           {/* Footer here */}
-          <footer>Footer</footer>
+          <Footer />
         </div>
       </body>
     </html>
