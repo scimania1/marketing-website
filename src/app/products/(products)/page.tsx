@@ -10,7 +10,6 @@ import {
 } from "@/lib/data";
 import { range } from "@/lib/utils";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -29,7 +28,7 @@ async function ProductsGrid({
   if (!query.length) {
     const products = await fetchAllProducts(page, categories);
     if (!products) {
-      notFound();
+      return <h2>No Search Results found</h2>;
     }
     return (
       <>
@@ -41,7 +40,7 @@ async function ProductsGrid({
   } else {
     const products = await fetchFilteredProducts(page, query, categories);
     if (!products) {
-      notFound();
+      return <h2>No Search Results found</h2>;
     }
     return (
       <>

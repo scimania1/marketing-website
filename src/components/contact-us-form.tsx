@@ -33,7 +33,12 @@ export default function ContactUsForm() {
         <div className="grid grid-cols-2 gap-2">
           <div className="space-y-1">
             <Label className="lg:text-base">Email</Label>
-            <Input type="email" name="email" inputMode="email" />
+            <Input
+              type="email"
+              name="email"
+              inputMode="email"
+              autoComplete="email"
+            />
           </div>
           <div className="space-y-1">
             <Label className="lg:text-base">Phone Number</Label>

@@ -4,34 +4,10 @@ import { SearchBar } from "@/components/search-bar";
 import { fetchTags } from "@/lib/data";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-
-async function FilterTags() {
-  const tags = await fetchTags();
-  if (!tags) {
-    return <h1>Not Connected</h1>;
-  } else {
-    tags.sort((a, b) => {
-      if (a.toLowerCase() < b.toLowerCase()) {
-        return -1;
-      } else if (a.toLowerCase() === b.toLowerCase()) {
-        return 0;
-      } else {
-        return 1;
-      }
-    });
-  }
-  return (
-    <div>
-      {tags.map((tag, idx) => {
-        let tagName = tag
-          .split(" ")
-          .map((part) => part[0].toUpperCase() + part.slice(1))
-          .join(" ");
-        return <h3 key={tag}>{`${idx + 1}. ${tagName}`}</h3>;
-      })}
-    </div>
-  );
-}
+import { Separator } from "@/components/ui/separator";
+import { range } from "@/lib/utils";
+import React from "react";
+import FilterUI from "@/components/filter-ui";
 
 function LayoutLoader() {
   return (
@@ -64,6 +40,42 @@ function LayoutLoader() {
         </div>
       </MaxWidthWrapper>
     </>
+  );
+}
+
+function FiltersLoader() {
+  const arr = range(1, 12);
+  return (
+    <div className="hidden lg:grid justify-center align-center grid-cols-[1fr_8fr] gap-2">
+      {arr.map((_, idx) => (
+        <React.Fragment key={idx}>
+          <Skeleton className="h-6" />
+          <Skeleton className="h-6" />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
+async function FilterTags() {
+  const tags = await fetchTags();
+  if (!tags) {
+    return <h1>Not Connected</h1>;
+  } else {
+    tags.sort((a, b) => {
+      if (a.toLowerCase() < b.toLowerCase()) {
+        return -1;
+      } else if (a.toLowerCase() === b.toLowerCase()) {
+        return 0;
+      } else {
+        return 1;
+      }
+    });
+  }
+  return (
+    <div className="lg:py-4">
+      <FilterUI categories={tags} />
+    </div>
   );
 }
 
@@ -109,8 +121,14 @@ export default function ProductsLayout({
       </section>
       <MaxWidthWrapper>
         <div className="relative grid items-start gap-4 py-4 sm:px-8 lg:grid-cols-[1fr_3fr] lg:gap-8 lg:py-8 xl:grid-cols-[1fr_4fr]">
-          <aside>
-            <Suspense key="filter-tags" fallback={<h1>Loading Filters...</h1>}>
+          <aside className="lg:sticky top-4 self-start lg:space-y-3">
+            <h2
+              className={`hidden lg:block ${playfairDisplay.className} text-2xl tracking-wider`}
+            >
+              Filters
+            </h2>
+            <Separator className="hidden lg:block" />
+            <Suspense key="filter-tags" fallback={<FiltersLoader />}>
               <FilterTags />
             </Suspense>
           </aside>
