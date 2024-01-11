@@ -9,8 +9,13 @@ import {
   fetchFilteredProductsCount,
 } from "@/lib/data";
 import { range } from "@/lib/utils";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Products",
+};
 
 async function ProductsGrid({
   page,
@@ -45,22 +50,6 @@ async function ProductsGrid({
         ))}
       </>
     );
-  }
-}
-
-async function Count({
-  query,
-  categories,
-}: {
-  query: string;
-  categories: string[];
-}) {
-  if (!query.length) {
-    const count = await fetchAllProductsCount(categories);
-    return <h1 className="text-red-700">{count}</h1>;
-  } else {
-    const count = await fetchFilteredProductsCount(query, categories);
-    return <h1 className="text-red-700">{count}</h1>;
   }
 }
 
@@ -128,7 +117,7 @@ export default function ProductsPage({
 
   return (
     <div>
-      <article className="grid auto-rows-max grid-cols-1 gap-4 py-4 sm:grid-cols-2 md:gap-6 md:py-8 lg:gap-8 xl:grid-cols-3">
+      <article className="grid auto-rows-max grid-cols-1 mb-4 gap-4 py-4 sm:grid-cols-2 md:gap-6 md:py-8 lg:gap-8 xl:grid-cols-3">
         <Suspense
           key={`${page}${categories}${query}`}
           fallback={<CardLoadingSkeleton limit={DEFAULT_LIMIT} />}

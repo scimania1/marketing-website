@@ -2,9 +2,8 @@ import { playfairDisplay } from "@/app/fonts";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { SearchBar } from "@/components/search-bar";
 import { fetchTags } from "@/lib/data";
-import Image from "next/image";
 import { Suspense } from "react";
-import bgGrid from "@/assets/bg-grid.png";
+import { Skeleton } from "@/components/ui/skeleton";
 
 async function FilterTags() {
   const tags = await fetchTags();
@@ -34,21 +33,73 @@ async function FilterTags() {
   );
 }
 
+function LayoutLoader() {
+  return (
+    <>
+      <section
+        className={`grid relative items-center justify-center text-center sm:px-6 py-6 h-72 lg:h-96 border-b-border [mask-image:linear-gradient(to_bottom,transparent,10%,white,90%,transparent)] ${playfairDisplay.className} `}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "#ffffff",
+            opacity: 0.1,
+            backgroundImage:
+              "linear-gradient(#000000 1.2000000000000002px, transparent 1.2000000000000002px), linear-gradient(to right, #000000 1.2000000000000002px, #ffffff 1.2000000000000002px)",
+            backgroundSize: "24px 24px",
+          }}
+        ></div>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl z-30">
+          <span>Gear up for success with our</span>
+          <span className="sm:mt-3 sm:block">
+            {" "}
+            high-performance mechanical components
+          </span>
+        </h1>
+      </section>
+      <MaxWidthWrapper>
+        <div className="relative grid items-start gap-4 py-4 sm:px-8 lg:grid-cols-[1fr_3fr] lg:gap-8 lg:py-8 xl:grid-cols-[1fr_4fr]">
+          <Skeleton className="h-[800px]" />
+          <Skeleton className="h-[800px]" />
+        </div>
+      </MaxWidthWrapper>
+    </>
+  );
+}
+
 export default function ProductsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <Suspense key="products-page" fallback={<LayoutLoader />}>
       <section
         className={`grid relative items-center justify-center text-center sm:px-6 py-6 h-72 lg:h-96 border-b-border [mask-image:linear-gradient(to_bottom,transparent,10%,white,90%,transparent)] ${playfairDisplay.className} `}
-        style={{
-          backgroundColor: "#ffffff",
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.07' fill-rule='evenodd'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3C/g%3E%3C/svg%3E");`,
-        }}
+        // style={{
+        //   backgroundColor: "#ffffff",
+        //   backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.07' fill-rule='evenodd'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3C/g%3E%3C/svg%3E");`,
+        // }}
+        // style={{
+        //   backgroundColor: "#ffffff",
+        //   opacity: 0.6,
+        //   backgroundImage:
+        //     "radial-gradient(#000000 0.6000000000000001px, transparent 0.6000000000000001px), radial-gradient(#000000 0.6000000000000001px, #ffffff 0.6000000000000001px)",
+        //   backgroundSize: "24px 24px",
+        //   backgroundPosition: "0 0,12px 12px",
+        // }}
       >
-        <h1 className="text-3xl md:text-4xl lg:text-5xl">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "#ffffff",
+            opacity: 0.1,
+            backgroundImage:
+              "linear-gradient(#000000 1.2000000000000002px, transparent 1.2000000000000002px), linear-gradient(to right, #000000 1.2000000000000002px, #ffffff 1.2000000000000002px)",
+            backgroundSize: "24px 24px",
+          }}
+        ></div>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl z-30">
           <span>Gear up for success with our</span>
           <span className="sm:mt-3 sm:block">
             {" "}
@@ -71,6 +122,6 @@ export default function ProductsLayout({
           </section>
         </div>
       </MaxWidthWrapper>
-    </>
+    </Suspense>
   );
 }
