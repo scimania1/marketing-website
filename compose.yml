@@ -9,16 +9,16 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/usr/src/app/src
-    develop:
-      watch:
-        - action: rebuild
-          path: package.json
-        - action: sync
-          path: ./
-          target: /usr/src/app
-          ignore:
-            - src
-            - node_modules
-            - .git
-            - .gitignore
-            - .next
+    # develop:
+    #   watch:
+    #     - action: rebuild
+    #       path: package.json
+    #     - action: sync
+    #       path: ./
+    #       target: /usr/src/app
+    #       ignore:
+    #         - src
+    #         - node_modules
+    #         - .git
+    #         - .gitignore
+    #         - .next

@@ -28,6 +28,7 @@ if (!cached) {
 
 async function connectDb() {
   if (cached.conn) {
+    console.log("Connection Accessed from cache");
     return cached.conn;
   }
   if (!cached.promise) {

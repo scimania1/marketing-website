@@ -5,7 +5,10 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Modern Engineers (India)",
+  title: {
+    default: "Modern Engineers (India)",
+    template: "%s | Modern Engineers (India)",
+  },
   description: "The standard for Agricultural Implement Parts and Equipment",
 };
 

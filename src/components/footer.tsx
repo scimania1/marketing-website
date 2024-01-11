@@ -1,19 +1,20 @@
 import Image from "next/image";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { nunitoSans } from "@/app/fonts";
+import { nunitoSans, playfairDisplay } from "@/app/fonts";
 import { Separator } from "@/components/ui/separator";
 
 export default function Footer() {
   return (
     <div className="mt-4 border border-t-secondary bg-background/75">
-      <MaxWidthWrapper className="grid py-8">
-        <div className="grid place-items-center">
+      <MaxWidthWrapper className="grid py-4">
+        <div className="grid gap-4 place-items-center">
           <span
-            className={`pb-4 text-muted-foreground ${nunitoSans.className}`}
+            className={`tracking-wider text-muted-foreground ${playfairDisplay.className}`}
           >
-            Our Brands
+            {" "}
+            Modern Engineers (India){" "}
           </span>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-10">
             <Image
               src="/GouravDLXLogo.png"
               alt="Gourav DLX Logo"
@@ -29,13 +30,8 @@ export default function Footer() {
               className="w-14"
             />
           </div>
-          <h1
-            className={`${nunitoSans.className} py-4 text-center text-xl font-medium tracking-wide text-muted-foreground`}
-          >
-            Modern Engineers (India)
-          </h1>
         </div>
-        <div className="flex px-12">
+        <div className="flex px-12 pt-6">
           <Separator orientation="vertical" className="hidden" />
           <Separator orientation="horizontal" className="md:hidden" />
         </div>
