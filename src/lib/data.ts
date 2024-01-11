@@ -258,37 +258,35 @@ export const fetchFilteredProductsCount = cache(
       return null;
     }
     let pipeline: any = [
-      [
-        {
-          $searchMeta: {
-            index: "filterProducts",
-            compound: {
-              should: [
-                {
-                  autocomplete: {
-                    query: query,
-                    path: "name",
-                    fuzzy: {
-                      maxEdits: 1,
-                    },
+      {
+        $searchMeta: {
+          index: "filterProducts",
+          compound: {
+            should: [
+              {
+                autocomplete: {
+                  query: query,
+                  path: "name",
+                  fuzzy: {
+                    maxEdits: 1,
                   },
                 },
-                {
-                  autocomplete: {
-                    query: query,
-                    path: "keywords",
-                    fuzzy: {
-                      maxEdits: 1,
-                    },
+              },
+              {
+                autocomplete: {
+                  query: query,
+                  path: "keywords",
+                  fuzzy: {
+                    maxEdits: 1,
                   },
                 },
-              ],
-            },
-            count: { type: "total" },
-            returnStoredSource: true,
+              },
+            ],
           },
+          count: { type: "total" },
+          returnStoredSource: true,
         },
-      ],
+      },
     ];
     if (categories.length > 0) {
       const categoryString = categories.join(" AND ");

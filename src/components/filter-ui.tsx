@@ -78,7 +78,7 @@ function FilterForm({
         onClick={() => {
           const params = new URLSearchParams(searchParams);
           params.delete("categories");
-          console.log(params.toString());
+          filterFormRef.current?.reset();
           router.push(createUrl("/products", params));
         }}
       >
