@@ -19,7 +19,7 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchProps>(
     const [inputValue, setInputValue] = React.useState(
       searchParams.get("query") || "",
     );
-    const debouncedInputValue = useDebounce(inputValue, 500);
+    const debouncedInputValue = useDebounce(inputValue, 250);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const clearInput = () => {
       setInputValue("");
