@@ -43,7 +43,7 @@ export default function ContactUsForm() {
         <div className="space-y-1">
           <Label className="lg:text-base">Message</Label>
           <Textarea
-            className="max-h-40"
+            className="h-20 lg:h-40"
             placeholder="Type a Message..."
             name="message"
           />
