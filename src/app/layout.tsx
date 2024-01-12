@@ -23,10 +23,8 @@ export default function RootLayout({
         className={`${nunitoSans.className} relative bg-background min-h-screen antialiased font-sans`}
       >
         <div className="flex flex-col min-h-screen">
-          {/* Navbar here */}
           <Header />
           <main className="flex-1 flex-grow">{children}</main>
-          {/* Footer here */}
           <Footer />
         </div>
       </body>

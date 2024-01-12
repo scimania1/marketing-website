@@ -1,11 +1,7 @@
 "use client";
 
 import useMediaQuery from "@/hooks/use-media-query";
-import {
-  ReadonlyURLSearchParams,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Drawer,
   DrawerClose,
@@ -17,44 +13,120 @@ import {
 } from "./ui/drawer";
 import { Button } from "./ui/button";
 import { SlidersHorizontal } from "lucide-react";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useTransition } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
-import { playfairDisplay } from "@/app/fonts";
-import { createUrl } from "@/lib/utils";
+import { cn, createUrl } from "@/lib/utils";
+
+export function ClearAllFiltersButton({ className }: { className?: string }) {
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  useEffect(() => {
+    const productGrid = document.getElementById("product-grid");
+    if (isPending) {
+      if (productGrid) {
+        productGrid.style.opacity = "0.4";
+      }
+    } else {
+      if (productGrid) {
+        productGrid.style.opacity = "1";
+      }
+    }
+  }, [isPending]);
+  const handleClearClick = () => {
+    startTransition(() => {
+      const filterForm = document.getElementById(
+        "filter-form",
+      ) as HTMLFormElement | null;
+      const params = new URLSearchParams(searchParams);
+      params.delete("categories");
+      params.set("page", "1");
+      filterForm?.reset();
+      router.push(createUrl("/products", params));
+    });
+  };
+  return (
+    <Button
+      variant="secondary"
+      type="reset"
+      onClick={handleClearClick}
+      className={cn(className)}
+      onKeyDown={(e) =>
+        (e.key === " " || e.key === "Enter") && handleClearClick
+      }
+    >
+      Clear All Filters
+    </Button>
+  );
+}
 
 function FilterForm({
   categories,
+  // isDesktop,
   children,
+  handleSubmit,
 }: {
   categories: string[];
+  // isDesktop: boolean;
   children: React.ReactNode;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }) {
   const searchParams = useSearchParams();
   const selectedCategories = searchParams.getAll("categories");
   const filterFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(filterFormRef.current || undefined);
-    const params = new URLSearchParams(searchParams);
-    params.delete("categories");
-    // @ts-ignore
-    for (const key of formData.keys()) {
-      params.append("categories", key);
-    }
-    router.push(createUrl("/products", params));
+  const [isPending, startTransition] = useTransition();
+  // useEffect(() => {
+  //   const productGrid = document.getElementById("product-grid");
+  //   if (isDesktop) {
+  //     if (isPending) {
+  //       if (productGrid) {
+  //         productGrid.style.opacity = "0.4";
+  //       }
+  //     } else {
+  //       if (productGrid) {
+  //         productGrid.style.opacity = "1";
+  //       }
+  //     }
+  //   }
+  // }, [isPending, isDesktop]);
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   startTransition(() => {
+  //     const formData = new FormData(filterFormRef.current || undefined);
+  //     const params = new URLSearchParams(searchParams);
+  //     params.delete("categories");
+  //     // @ts-ignore
+  //     for (const key of formData.keys()) {
+  //       params.append("categories", key);
+  //     }
+  //     router.push(createUrl("/products", params));
+  //   });
+  // };
+  const handleClearClick = () => {
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams);
+      params.delete("categories");
+      params.set("page", "1");
+      filterFormRef.current?.reset();
+      router.push(createUrl("/products", params));
+    });
   };
   return (
-    <form ref={filterFormRef} onSubmit={(e) => handleSubmit(e)}>
+    <form
+      ref={filterFormRef}
+      onSubmit={(e) => handleSubmit(e)}
+      id="filter-form"
+    >
       <ScrollArea
         type="auto"
         className="mt-3 h-[300px] px-4 text-sm lg:mt-0 lg:px-0 lg:h-auto lg:mb-4"
       >
         <div className="grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
           {categories.map((category) => (
-            <div key={category} className="flex items-center gap-2">
+            <div key={category} className="flex items-center gap-2 lg:px-2">
               <Checkbox
                 id={category}
                 name={category}
@@ -75,22 +147,25 @@ function FilterForm({
         variant="secondary"
         type="reset"
         className="hidden lg:flex w-full mb-4"
-        onClick={() => {
-          const params = new URLSearchParams(searchParams);
-          params.delete("categories");
-          filterFormRef.current?.reset();
-          router.push(createUrl("/products", params));
-        }}
+        onClick={handleClearClick}
+        onKeyDown={(e) =>
+          (e.key === " " || e.key === "Enter") && handleClearClick
+        }
       >
         Clear Filters
       </Button>
-
       {children}
     </form>
   );
 }
 
-export default function FilterUI({ categories }: { categories: string[] }) {
+export function FilterSection({
+  categories,
+  handleSubmit,
+}: {
+  categories: string[];
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}) {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   if (!isDesktop) {
     return (
@@ -105,7 +180,7 @@ export default function FilterUI({ categories }: { categories: string[] }) {
           <DrawerHeader>
             <DrawerTitle className="tracking-wide">Choose Filters</DrawerTitle>
           </DrawerHeader>
-          <FilterForm categories={categories}>
+          <FilterForm categories={categories} handleSubmit={handleSubmit}>
             <DrawerFooter>
               <DrawerClose asChild>
                 <Button variant="secondary">Cancel</Button>
@@ -123,7 +198,7 @@ export default function FilterUI({ categories }: { categories: string[] }) {
   }
   return (
     <>
-      <FilterForm categories={categories}>
+      <FilterForm categories={categories} handleSubmit={handleSubmit}>
         <Button variant="default" type="submit" className="w-full">
           Apply Filters
         </Button>
@@ -131,42 +206,41 @@ export default function FilterUI({ categories }: { categories: string[] }) {
     </>
   );
 }
-// <div className="flex items-center gap-2 lg:hidden">
-//     <Drawer> <DrawerTrigger asChild>
-//         <Button className="gap-2" variant="outline">
-//           <SlidersHorizontal size={20} />
-//           <span>Filters</span>
-//         </Button>
-//       </DrawerTrigger>
-//       <DrawerContent className="px-3">
-//         <SearchFormCategories
-//           categories={categories}
-//           initialSelectedCategories={selectedCategories}
-//         >
-//           <DrawerFooter>
-//             <DrawerClose asChild>
-//               <Button variant="default" type="submit">
-//                 Apply
-//               </Button>
-//             </DrawerClose>
-//           </DrawerFooter>
-//         </SearchFormCategories>
-//       </DrawerContent>
-//     </Drawer>
-//     {selectedCategories.length > 0 ? <ClearFiltersButton /> : null}
-//   </div>
-//   <div className="hidden space-y-4 lg:block">
-//     <h2 className={`text-2xl tracking-wide ${playfairDisplay.className}`}>
-//       Filters
-//     </h2>
-//     <Separator orientation="horizontal" />
-//     <SearchFormCategories
-//       categories={categories}
-//       initialSelectedCategories={selectedCategories}
-//     >
-//       <Button variant="default" type="submit">
-//         Apply
-//       </Button>
-//     </SearchFormCategories>
-//   </div>
-//
+
+export default function FilterUI({ categories }: { categories: string[] }) {
+  const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  useEffect(() => {
+    const productGrid = document.getElementById("product-grid");
+    if (isPending) {
+      if (productGrid) {
+        productGrid.style.opacity = "0.4";
+      }
+    } else {
+      if (productGrid) {
+        productGrid.style.opacity = "1";
+      }
+    }
+  }, [isPending]);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    startTransition(() => {
+      const form = document.getElementById(
+        "filter-form",
+      ) as HTMLFormElement | null;
+      const formData = new FormData(form || undefined);
+      const params = new URLSearchParams(searchParams);
+      params.delete("categories");
+      params.set("page", "1");
+      // @ts-ignore
+      for (const key of formData.keys()) {
+        params.append("categories", key);
+      }
+      router.push(createUrl("/products", params));
+    });
+  };
+  return <FilterSection categories={categories} handleSubmit={handleSubmit} />;
+}
+
+// REDO USING SERVER ACTIONS, WHATEVER THIS IS, IS JUST ABSOLUTE TRASH

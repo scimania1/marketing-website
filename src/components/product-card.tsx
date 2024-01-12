@@ -93,8 +93,8 @@ export default function ProductCard(props: ProductProjected) {
         </div>
         <Link
           href={`/products/${_id}`}
+          scroll={false}
           className="inline-flex items-center justify-center lg:flex-grow"
-          passHref
         >
           <Button className="block lg:flex-grow" variant="default">
             <span>View</span>

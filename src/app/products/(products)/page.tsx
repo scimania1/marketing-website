@@ -116,7 +116,10 @@ export default function ProductsPage({
 
   return (
     <div>
-      <article className="grid auto-rows-max grid-cols-1 mb-4 gap-4 py-4 sm:grid-cols-2 md:gap-6 md:py-8 lg:gap-8 xl:grid-cols-3">
+      <article
+        id="product-grid"
+        className="grid auto-rows-max grid-cols-1 mb-4 gap-4 py-4 sm:grid-cols-2 md:gap-6 md:py-8 lg:gap-8 xl:grid-cols-3"
+      >
         <Suspense
           key={`${page}${categories}${query}`}
           fallback={<CardLoadingSkeleton limit={DEFAULT_LIMIT} />}

@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { range } from "@/lib/utils";
 import React from "react";
-import FilterUI from "@/components/filter-ui";
+import FilterUI, { ClearAllFiltersButton } from "@/components/filter-ui";
 
 function LayoutLoader() {
   return (
@@ -73,8 +73,9 @@ async function FilterTags() {
     });
   }
   return (
-    <div className="lg:py-4">
+    <div className="flex gap-4 justify-center items-center lg:py-4 lg:block">
       <FilterUI categories={tags} />
+      <ClearAllFiltersButton className="lg:hidden" />
     </div>
   );
 }
