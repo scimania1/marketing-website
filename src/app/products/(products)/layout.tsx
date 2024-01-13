@@ -46,7 +46,7 @@ function LayoutLoader() {
 function FiltersLoader() {
   const arr = range(1, 12);
   return (
-    <div className="hidden lg:grid justify-center align-center grid-cols-[1fr_8fr] gap-2">
+    <div className="lg:py-4 hidden lg:grid justify-center align-center grid-cols-[1fr_8fr] gap-3">
       {arr.map((_, idx) => (
         <React.Fragment key={idx}>
           <Skeleton className="h-6" />

@@ -1,31 +1,31 @@
-import { fetchProductById } from "@/lib/data";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import ProductLayout from "@/components/product-layout";
+import { fetchAllProductIds, fetchProductById } from "@/lib/data";
+import { wait } from "@/lib/utils";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
-async function ProductData({ productId }: { productId: string }) {
-  const data = await fetchProductById(productId);
-  if (!data) {
-    notFound();
-  }
-  return (
-    <article>
-      <h2>{data.name}</h2>
-      <h2>{`${data._id}`}</h2>
-    </article>
+export async function generateStaticParams() {
+  const ids = await fetchAllProductIds().then(
+    (ids) => ids?.map((id) => ({ id: `${id._id}` })),
   );
+  return ids as any[];
 }
 
-export default function ProductIdPage({
+export default async function ProductIdPage({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  const data = await fetchProductById(id);
+  // await wait(300000);
+  if (!data) {
+    notFound();
+  }
   return (
-    <section>
-      <h2>Product ID: {id}</h2>
-      <Suspense fallback={<h1>Loading Product Data ...</h1>} key={id}>
-        <ProductData productId={id} />
-      </Suspense>
+    <section className="py-4 lg:py-6">
+      <MaxWidthWrapper>
+        <ProductLayout {...data} />
+      </MaxWidthWrapper>
     </section>
   );
 }

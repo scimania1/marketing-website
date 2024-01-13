@@ -5,6 +5,14 @@ import redis from "@/lib/redis";
 import mongoose from "mongoose";
 import { DEFAULT_LIMIT, EXPIRE_TIME } from "./constants";
 
+export type ProductProjected = {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  sizes: string;
+  material: string;
+  imageURL: string;
+};
+
 function concatCategories(categories: string[]) {
   if (!categories.length) {
     return "null";
@@ -65,14 +73,6 @@ export const fetchProductById = cache(async (_id: string) => {
   await tx.exec();
   return productData;
 });
-
-export type ProductProjected = {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  sizes: string;
-  material: string;
-  imageURL: string;
-};
 
 export const fetchAllProducts = cache(
   async (page: number, categories: string[]) => {
@@ -191,30 +191,70 @@ export const fetchFilteredProducts = cache(
       returnStoredSource: true,
     };
     if (categories.length > 0) {
-      const categoryString = categories.join(" AND ");
-      options.compound.filter = [
-        { queryString: { defaultPath: "tags", query: categoryString } },
-      ];
+      const categoryString = categories
+        .map((category) => `"${category}"`)
+        .join(" AND ");
+      options = {
+        index: "filterProducts",
+        compound: {
+          filter: [
+            { queryString: { defaultPath: "tags", query: categoryString } },
+            {
+              compound: {
+                should: [
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: "name",
+                      fuzzy: {
+                        maxEdits: 1,
+                      },
+                    },
+                  },
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: "keywords",
+                      fuzzy: {
+                        maxEdits: 1,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        returnStoredSource: true,
+      };
     }
-    const result: ProductProjected[] = await Products.aggregate()
-      .search(options)
-      .skip(skip)
-      .limit(DEFAULT_LIMIT)
-      .addFields({ size: { $first: "$sizes" } })
-      .addFields({ mat: { $first: "$material" } })
-      .project({
-        _id: 1,
-        name: 1,
-        imageURL: 1,
-        sizes: "$size",
-        material: "$material",
-      });
-    if (result.length) {
-      await redis.hset(redisKey, {
-        [`page-${page}`]: result,
-      });
+    try {
+      const result: ProductProjected[] = await Products.aggregate()
+        .search(options)
+        .skip(skip)
+        .limit(DEFAULT_LIMIT)
+        .addFields({ size: { $first: "$sizes" } })
+        .addFields({ mat: { $first: "$material" } })
+        .project({
+          _id: 1,
+          name: 1,
+          imageURL: 1,
+          sizes: "$size",
+          material: "$mat",
+        });
+      if (result.length) {
+        await redis.hset(redisKey, {
+          [`page-${page}`]: result,
+        });
+      }
+      return result;
+    } catch (error) {
+      console.error(
+        "[ERROR] Some error occured inside the fetchFilteredProducts aggregation",
+        error,
+      );
+      return null;
     }
-    return result;
   },
 );
 
@@ -289,9 +329,46 @@ export const fetchFilteredProductsCount = cache(
       },
     ];
     if (categories.length > 0) {
-      const categoryString = categories.join(" AND ");
-      pipeline[0].$searchMeta.compound.filter = [
-        { queryString: { defaultPath: "tags", query: categoryString } },
+      const categoryString = categories
+        .map((category) => `"${category}"`)
+        .join(" AND ");
+      pipeline = [
+        {
+          $searchMeta: {
+            index: "filterProducts",
+            compound: {
+              filter: [
+                { queryString: { defaultPath: "tags", query: categoryString } },
+                {
+                  compound: {
+                    should: [
+                      {
+                        autocomplete: {
+                          query: query,
+                          path: "name",
+                          fuzzy: {
+                            maxEdits: 1,
+                          },
+                        },
+                      },
+                      {
+                        autocomplete: {
+                          query: query,
+                          path: "keywords",
+                          fuzzy: {
+                            maxEdits: 1,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            count: { type: "total" },
+            returnStoredSource: true,
+          },
+        },
       ];
     }
     const result: { count: { total: number } }[] =
@@ -304,3 +381,14 @@ export const fetchFilteredProductsCount = cache(
     return result[0].count.total;
   },
 );
+
+export async function fetchAllProductIds() {
+  try {
+    await connectDb();
+  } catch (err) {
+    console.error("[ERROR] Failed to Connect to Database", err);
+    return null;
+  }
+  const ids = await Products.find({}).select("_id").lean();
+  return ids;
+}

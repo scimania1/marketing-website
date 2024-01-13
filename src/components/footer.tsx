@@ -1,6 +1,5 @@
 import Image from "next/image";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { nunitoSans, playfairDisplay } from "@/app/fonts";
 import { Separator } from "@/components/ui/separator";
 
 export default function Footer() {
@@ -8,11 +7,8 @@ export default function Footer() {
     <div className="mt-4 border border-t-secondary bg-background/75">
       <MaxWidthWrapper className="grid py-4">
         <div className="grid gap-4 place-items-center">
-          <span
-            className={`tracking-wider text-muted-foreground ${playfairDisplay.className}`}
-          >
-            {" "}
-            Modern Engineers (India){" "}
+          <span className={`text-muted-foreground `}>
+            Modern Engineers (India)
           </span>
           <div className="flex items-center justify-center gap-10">
             <Image
