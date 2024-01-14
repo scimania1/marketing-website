@@ -12,12 +12,12 @@ const quote =
   "Elevate your expectations as you peruse through our product gallery, where each item represents the pinnacle of craftsmanship and exactness.";
 
 const categories = [
-  "Agricultural Implement Parts",
-  "CNC Turned Parts",
-  "Fasteners",
-  "John Deere Weight Bolts",
-  "Sheet Metal Parts",
-  "Tractor Trolley Parts",
+  "agricultural implement parts",
+  "cnc turned parts",
+  "fasteners",
+  "john deere weight bolts",
+  "sheet metal parts",
+  "tractor trolley parts",
 ];
 
 export default function Home() {
@@ -65,12 +65,16 @@ export default function Home() {
             </h2>
             <div className="flex flex-wrap gap-2 xl:gap-3">
               {categories.map((category) => (
-                <Link href="/products" key={category}>
+                <Link href={`/products?categories=${category}`} key={category}>
                   <Badge
                     variant="secondary"
                     className="px-6 py-2 text-xs text-muted-foreground xl:text-base"
                   >
-                    {category}
+                    {category
+                      .split(" ")
+                      .map((val) => val[0].toUpperCase() + val.slice(1))
+                      .join(" ")
+                      .trim()}
                   </Badge>
                 </Link>
               ))}

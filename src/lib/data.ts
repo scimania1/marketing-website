@@ -5,6 +5,9 @@ import redis from "@/lib/redis";
 import mongoose from "mongoose";
 import { DEFAULT_LIMIT, EXPIRE_TIME } from "./constants";
 
+let allProductsCount = 0;
+let filteredProductsCount = 0;
+
 export type ProductProjected = {
   _id: mongoose.Types.ObjectId;
   name: string;
@@ -79,12 +82,13 @@ export const fetchAllProducts = cache(
     // check data inside redis and return the data if it exists.
     // then connect to mongodb.
     const redisKey = `products:category:${concatCategories(categories)}`;
-    const data: ProductProjected[] | null = await redis.hget(
-      redisKey,
-      `page-${page}`,
-    );
-    if (data) {
-      return data;
+    const res = await redis.hmget(redisKey, `page-${page}`, `count`);
+    // if (data) {
+    //   return data;
+    // }
+    if (res && res[`page-${page}`] && res.count) {
+      allProductsCount = Number(res.count);
+      return res[`page-${page}`] as ProductProjected[];
     }
     try {
       await connectDb();
@@ -101,17 +105,24 @@ export const fetchAllProducts = cache(
 
     const mainPipeline: mongoose.PipelineStage[] = [
       { $sort: { id: 1 } },
-      { $skip: skip },
-      { $limit: DEFAULT_LIMIT },
-      { $addFields: { size: { $first: "$sizes" } } },
-      { $addFields: { mat: { $first: "$material" } } },
       {
-        $project: {
-          _id: 1,
-          name: 1,
-          imageURL: 1,
-          sizes: "$size",
-          material: "$mat",
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: DEFAULT_LIMIT },
+            { $addFields: { size: { $first: "$sizes" } } },
+            { $addFields: { mat: { $first: "$material" } } },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                imageURL: 1,
+                sizes: "$size",
+                material: "$mat",
+              },
+            },
+          ],
+          count: [{ $count: "count" }],
         },
       },
     ];
@@ -123,10 +134,12 @@ export const fetchAllProducts = cache(
       pipeline = mainPipeline;
     }
 
-    const result: ProductProjected[] =
+    const result: { data: ProductProjected[]; count: { count: number }[] }[] =
       await Products.aggregate(pipeline).exec();
 
-    if (result.length > 0) {
+    allProductsCount = result[0].count[0].count;
+
+    if (result[0].data.length > 0) {
       let categoryKey: string;
       if (categories.length > 0) {
         categoryKey = categories
@@ -136,9 +149,10 @@ export const fetchAllProducts = cache(
         categoryKey = "null";
       }
       await redis.hset(redisKey, {
-        [`page-${page}`]: result,
+        [`page-${page}`]: result[0].data,
+        count: result[0].count[0].count,
       });
-      return result;
+      return result[0].data;
     }
     return null;
   },
@@ -150,13 +164,14 @@ export const fetchFilteredProducts = cache(
     const redisKey = `products:query:${query}:category:${concatCategories(
       categories,
     )}`;
-    const data: ProductProjected[] | null = await redis.hget(
-      redisKey,
-      `page-${page}`,
-    );
-    if (data) {
-      return data;
+    const res = await redis.hmget(redisKey, `page-${page}`, "count");
+    if (res && res[`page-${page}`] && res.count) {
+      filteredProductsCount = Number(res.count);
+      return res[`page-${page}`] as ProductProjected[];
     }
+    // if (data) {
+    //   return data;
+    // }
     try {
       await connectDb();
     } catch (err) {
@@ -164,142 +179,9 @@ export const fetchFilteredProducts = cache(
       return null;
     }
     const skip = (page - 1) * DEFAULT_LIMIT;
-    let options: { [operator: string]: any } = {
-      index: "filterProducts",
-      compound: {
-        should: [
-          {
-            autocomplete: {
-              query: query,
-              path: "name",
-              fuzzy: {
-                maxEdits: 1,
-              },
-            },
-          },
-          {
-            autocomplete: {
-              query: query,
-              path: "keywords",
-              fuzzy: {
-                maxEdits: 1,
-              },
-            },
-          },
-        ],
-      },
-      returnStoredSource: true,
-    };
-    if (categories.length > 0) {
-      const categoryString = categories
-        .map((category) => `"${category}"`)
-        .join(" AND ");
-      options = {
-        index: "filterProducts",
-        compound: {
-          filter: [
-            { queryString: { defaultPath: "tags", query: categoryString } },
-            {
-              compound: {
-                should: [
-                  {
-                    autocomplete: {
-                      query: query,
-                      path: "name",
-                      fuzzy: {
-                        maxEdits: 1,
-                      },
-                    },
-                  },
-                  {
-                    autocomplete: {
-                      query: query,
-                      path: "keywords",
-                      fuzzy: {
-                        maxEdits: 1,
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-        returnStoredSource: true,
-      };
-    }
-    try {
-      const result: ProductProjected[] = await Products.aggregate()
-        .search(options)
-        .skip(skip)
-        .limit(DEFAULT_LIMIT)
-        .addFields({ size: { $first: "$sizes" } })
-        .addFields({ mat: { $first: "$material" } })
-        .project({
-          _id: 1,
-          name: 1,
-          imageURL: 1,
-          sizes: "$size",
-          material: "$mat",
-        });
-      if (result.length) {
-        await redis.hset(redisKey, {
-          [`page-${page}`]: result,
-        });
-      }
-      return result;
-    } catch (error) {
-      console.error(
-        "[ERROR] Some error occured inside the fetchFilteredProducts aggregation",
-        error,
-      );
-      return null;
-    }
-  },
-);
-
-export const fetchAllProductsCount = cache(async (categories: string[]) => {
-  const redisKey = `products:category:${concatCategories(categories)}`;
-  const data = await redis.hget(redisKey, "count");
-  if (data) {
-    return Number(data);
-  }
-  try {
-    await connectDb();
-  } catch (err) {
-    console.error("[ERROR] Failed to Connect to Database", err);
-    return null;
-  }
-  let count: number;
-  if (categories.length > 0) {
-    count = await Products.countDocuments({ tags: { $all: categories } });
-  } else {
-    count = await Products.countDocuments({});
-  }
-  await redis.hset(redisKey, {
-    count: count,
-  });
-  return count;
-});
-
-export const fetchFilteredProductsCount = cache(
-  async (query: string, categories: string[]) => {
-    const redisKey = `products:query:${query}:category:${concatCategories(
-      categories,
-    )}`;
-    const data: string | null = await redis.hget(redisKey, "count");
-    if (data) {
-      return Number(data);
-    }
-    try {
-      await connectDb();
-    } catch (err) {
-      console.error("[ERROR] Failed to Connect to Database", err);
-      return null;
-    }
-    let pipeline: any = [
+    let pipeline: any[] = [
       {
-        $searchMeta: {
+        $search: {
           index: "filterProducts",
           compound: {
             should: [
@@ -323,8 +205,27 @@ export const fetchFilteredProductsCount = cache(
               },
             ],
           },
-          count: { type: "total" },
           returnStoredSource: true,
+        },
+      },
+      {
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: DEFAULT_LIMIT },
+            { $addFields: { size: { $first: "$sizes" } } },
+            { $addFields: { mat: { $first: "$material" } } },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                imageURL: 1,
+                sizes: "$size",
+                material: "$mat",
+              },
+            },
+          ],
+          count: [{ $count: "count" }],
         },
       },
     ];
@@ -334,7 +235,7 @@ export const fetchFilteredProductsCount = cache(
         .join(" AND ");
       pipeline = [
         {
-          $searchMeta: {
+          $search: {
             index: "filterProducts",
             compound: {
               filter: [
@@ -365,20 +266,86 @@ export const fetchFilteredProductsCount = cache(
                 },
               ],
             },
-            count: { type: "total" },
             returnStoredSource: true,
+          },
+        },
+        {
+          $facet: {
+            data: [
+              { $skip: skip },
+              { $limit: DEFAULT_LIMIT },
+              { $addFields: { size: { $first: "$sizes" } } },
+              { $addFields: { mat: { $first: "$material" } } },
+              {
+                $project: {
+                  _id: 1,
+                  name: 1,
+                  imageURL: 1,
+                  sizes: "$size",
+                  material: "$mat",
+                },
+              },
+            ],
+            count: [{ $count: "count" }],
           },
         },
       ];
     }
-    const result: { count: { total: number } }[] =
-      await Products.aggregate(pipeline);
-    if (result[0].count.total !== 0) {
-      await redis.hset(redisKey, {
-        count: result[0].count.total,
-      });
+    try {
+      const result: { data: ProductProjected[]; count: { count: number }[] }[] =
+        await Products.aggregate(pipeline).exec();
+      filteredProductsCount = result[0].count[0].count;
+      if (result[0].data.length) {
+        await redis.hset(redisKey, {
+          [`page-${page}`]: result[0].data,
+          count: result[0].count[0].count,
+        });
+      }
+      return result[0].data;
+    } catch (error) {
+      console.error(
+        "[ERROR] Some error occured inside the fetchFilteredProducts aggregation",
+        error,
+      );
+      return null;
     }
-    return result[0].count.total;
+  },
+);
+
+export const fetchAllProductsCount = cache(
+  async (page: number, categories: string[]) => {
+    // const redisKey = `products:category:${concatCategories(categories)}`;
+    // const data = await redis.hget(redisKey, "count");
+    // if (data) {
+    //   return Number(data);
+    // }
+    await fetchAllProducts(page, categories);
+    const count = allProductsCount;
+    // console.log("fetchAllProductsCount ran with value of ", { count });
+    // await redis.hset(redisKey, {
+    //   count: count,
+    // });
+    return count;
+  },
+);
+
+export const fetchFilteredProductsCount = cache(
+  async (page: number, query: string, categories: string[]) => {
+    // const redisKey = `products:query:${query}:category:${concatCategories(
+    //   categories,
+    // )}`;
+    // const data: string | null = await redis.hget(redisKey, "count");
+    // if (data) {
+    //   return Number(data);
+    // }
+    await fetchFilteredProducts(page, query, categories);
+    const count = filteredProductsCount;
+    // if (count !== 0) {
+    //   await redis.hset(redisKey, {
+    //     count: count,
+    //   });
+    // }
+    return count;
   },
 );
 

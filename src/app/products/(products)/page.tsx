@@ -74,9 +74,9 @@ async function PageNumbers({
 }) {
   let count: number | null;
   if (!query.length) {
-    count = await fetchAllProductsCount(categories);
+    count = await fetchAllProductsCount(page, categories);
   } else {
-    count = await fetchFilteredProductsCount(query, categories);
+    count = await fetchFilteredProductsCount(page, query, categories);
   }
   if (!count) {
     return null;

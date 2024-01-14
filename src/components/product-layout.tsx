@@ -15,7 +15,7 @@ export default function ProductLayout(product: Product) {
       </figure>
       <div className="space-y-2 lg:space-y-4">
         <h1
-          className={`${playfairDisplay.className} text-xl text-balance tracking-wide md:text-3xl`}
+          className={`${playfairDisplay.className} text-2xl font-medium text-balance tracking-wide md:text-3xl`}
         >
           {product.name}
         </h1>
