@@ -137,7 +137,11 @@ export const fetchAllProducts = cache(
     const result: { data: ProductProjected[]; count: { count: number }[] }[] =
       await Products.aggregate(pipeline).exec();
 
-    allProductsCount = result[0].count[0].count;
+    if (result[0].count[0]) {
+      allProductsCount = result[0].count[0].count;
+    } else {
+      allProductsCount = 0;
+    }
 
     if (result[0].data.length > 0) {
       let categoryKey: string;
@@ -294,7 +298,11 @@ export const fetchFilteredProducts = cache(
     try {
       const result: { data: ProductProjected[]; count: { count: number }[] }[] =
         await Products.aggregate(pipeline).exec();
-      filteredProductsCount = result[0].count[0].count;
+      if (result[0].count[0]) {
+        filteredProductsCount = result[0].count[0].count;
+      } else {
+        filteredProductsCount = 0;
+      }
       if (result[0].data.length) {
         await redis.hset(redisKey, {
           [`page-${page}`]: result[0].data,
