@@ -244,3 +244,7 @@ export default function FilterUI({ categories }: { categories: string[] }) {
 }
 
 // REDO USING SERVER ACTIONS, WHATEVER THIS IS, IS JUST ABSOLUTE TRASH
+
+export function FilterTestUI({ categories }: { categories: string[] }) {
+  return null;
+}

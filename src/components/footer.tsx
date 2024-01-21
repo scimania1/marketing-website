@@ -4,12 +4,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function Footer() {
   return (
-    <div className="mt-4 border border-t-secondary bg-background/75">
-      <MaxWidthWrapper className="grid py-4">
+    <div className="border py-6 md:py-8 lg:py-12 xl:py-16 border-t-secondary bg-background/75">
+      <MaxWidthWrapper className="grid">
         <div className="grid gap-4 place-items-center">
-          <span className={`text-muted-foreground `}>
-            Modern Engineers (India)
-          </span>
           <div className="flex items-center justify-center gap-10">
             <Image
               src="/GouravDLXLogo.png"
@@ -32,6 +29,12 @@ export default function Footer() {
           <Separator orientation="horizontal" className="md:hidden" />
         </div>
       </MaxWidthWrapper>
+      <h2 className="text-center pt-4 text-md lg:text-xl">
+        Copyright &copy; 2024 Modern Engineers (India)
+      </h2>
+      <h2 className="text-center pt-1 text-md lg:text-xl">
+        All Rights Reserved
+      </h2>
     </div>
   );
 }

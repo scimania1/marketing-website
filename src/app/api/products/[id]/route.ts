@@ -11,7 +11,6 @@ export async function GET(
 ) {
   // invalid ID
   const _id = id.id;
-  console.log(_id);
   if (!mongoose.isValidObjectId(_id)) {
     return Response.json({ success: false, message: "Invalid Product Id" });
   }

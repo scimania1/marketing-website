@@ -8,7 +8,8 @@ export default function Header() {
   return (
     <header className="sticky left-0 top-0 z-30 md:static">
       <nav
-        className="border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80"
+        // className="border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80"
+        className="border-b border-border/50 bg-background"
         aria-label="primary-navigation"
       >
         <MaxWidthWrapper>

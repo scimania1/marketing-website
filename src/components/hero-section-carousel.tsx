@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import {
   Carousel,
@@ -15,20 +16,54 @@ export default function HeroSectionCarousel() {
     <Carousel
       className="w-full"
       opts={{ loop: true }}
-      // plugins={[Autoplay({ delay: 2000 })]}
+      plugins={[Autoplay({ delay: 2000 })]}
     >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
+        <CarouselItem>
+          <div>
+            <Card className="p-0">
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/MainPhoto.png"
+                  alt="Main Photo of Various Parts"
+                  className="object-cover w-full h-full"
+                  width={1000}
+                  height={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="p-1">
+            <Card>
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/TillerPins.png"
+                  alt="Tiller Pins"
+                  className="object-cover w-full h-full"
+                  height={1000}
+                  width={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="p-1">
+            <Card>
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/DrobberPin.png"
+                  alt="Drobber Pin"
+                  className="object-cover w-full h-full"
+                  width={1000}
+                  height={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
       </CarouselContent>
       <CarouselPrevious className="left-4 p-1 lg:left-8" />
       <CarouselNext className="right-4 p-1 lg:right-8" />

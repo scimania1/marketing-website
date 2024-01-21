@@ -29,7 +29,7 @@ export default function ContactUs() {
         {/*   Contact Us */}
         {/* </h1> */}
         <h1
-          className={`text-3xl md:text-4xl lg:text-5xl z-30 ${playfairDisplay.className}`}
+          className={`text-3xl tracking-wide md:text-5xl text-balance lg:text-6xl z-30 ${playfairDisplay.className}`}
         >
           Contact Us
         </h1>

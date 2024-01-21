@@ -26,20 +26,34 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchProps>(
       inputRef.current && inputRef.current.focus();
     };
     const prevQuery = React.useRef(searchParams.get("query") || "");
+    const [pending, startTransition] = React.useTransition();
 
     React.useEffect(() => {
-      const params = new URLSearchParams(searchParams);
-      if (debouncedInputValue.length) {
-        params.set("query", debouncedInputValue);
-      } else {
-        params.delete("query");
-      }
-      if (debouncedInputValue !== prevQuery.current) {
-        params.set("page", "1");
-        prevQuery.current = debouncedInputValue;
-      }
-      router.push(createUrl(pathname, params));
+      startTransition(() => {
+        const params = new URLSearchParams(searchParams);
+        if (debouncedInputValue.length) {
+          params.set("query", debouncedInputValue);
+        } else {
+          params.delete("query");
+        }
+        if (debouncedInputValue !== prevQuery.current) {
+          params.set("page", "1");
+          prevQuery.current = debouncedInputValue;
+        }
+        router.push(createUrl(pathname, params));
+      });
     }, [debouncedInputValue, searchParams, router, pathname]);
+
+    React.useEffect(() => {
+      const productGrid = document.getElementById("product-grid");
+      if (productGrid) {
+        if (pending) {
+          productGrid.style.opacity = "0.4";
+        } else {
+          productGrid.style.opacity = "1";
+        }
+      }
+    }, [pending]);
 
     return (
       <div

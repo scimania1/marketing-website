@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function ProductLayout(product: Product) {
   return (
-    <article className="px-8 grid gap-4 sm:grid-cols-2">
+    <article className="px-8 grid items-center gap-4 sm:grid-cols-2">
       <figure className="relative aspect-square rounded-xl">
         <Image
           className="rounded-xl"
