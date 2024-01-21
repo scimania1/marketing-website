@@ -194,7 +194,7 @@ export default function Timeline() {
               timelineContent="In 2014, Modern Engineers (India) strategically broadened its market reach through collaborations with ancillaries and exporters, demonstrating a commitment to growth. By supplying these partners, the company not only expanded its customer base but also strengthened its industry position, fostering synergies in the supply chain for the seamless functioning of the agricultural machinery ecosystem."
             />
             <TimelineItem
-              timelineYear={2022}
+              timelineYear={2015}
               timelineHeading="Became OEM for Leading Agricultural Implement and Tractor Industries"
               timelineContent="Evolved into an OEM for top agricultural implement and tractor industries, showcasing commitment to quality and strong industry partnerships. A pivotal moment in Modern Engineers' journey, emphasizing innovation and excellence."
             />
