@@ -70,7 +70,7 @@ function TimelineItem({
         initial="offscreen"
         whileInView="visible"
         transition={spring}
-        viewport={{ margin: "0px 0px -40% 0px" }}
+        viewport={{ margin: "0px 0px -50% 0px" }}
       >
         <h2 className="text-2xl font-medium tracking-tight text-balance sm:text-3xl lg:text-4xl xl:text-5xl">
           {timelineHeading}
@@ -88,7 +88,7 @@ export default function Timeline() {
   const timelineContainer = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineContainer,
-    offset: ["start 50vh", "end 50vh"],
+    offset: ["start center", "end center"],
   });
   return (
     <section className="bg-primary text-primary-foreground py-4 md:py-8 lg:py-16 xl:py-20">
@@ -132,7 +132,7 @@ export default function Timeline() {
                   initial="offscreen"
                   whileInView="visible"
                   custom={0}
-                  viewport={{ margin: "0px 0px -40% 0px" }}
+                  viewport={{ margin: "0px 0px -50% 0px" }}
                 >
                   <Image
                     className="rounded-lg aspect-square object-cover"
@@ -147,7 +147,7 @@ export default function Timeline() {
                   initial="offscreen"
                   whileInView="visible"
                   custom={1}
-                  viewport={{ margin: "0px 0px -40% 0px" }}
+                  viewport={{ margin: "0px 0px -50% 0px" }}
                 >
                   <Image
                     className="rounded-lg aspect-square object-cover"
@@ -162,7 +162,7 @@ export default function Timeline() {
                   initial="offscreen"
                   whileInView="visible"
                   custom={2}
-                  viewport={{ margin: "0px 0px -40% 0px" }}
+                  viewport={{ margin: "0px 0px -50% 0px" }}
                 >
                   <Image
                     className="rounded-lg aspect-square object-cover"
@@ -177,7 +177,7 @@ export default function Timeline() {
                   initial="offscreen"
                   whileInView="visible"
                   custom={3}
-                  viewport={{ margin: "0px 0px -40% 0px" }}
+                  viewport={{ margin: "0px 0px -50% 0px" }}
                 >
                   <Image
                     className="rounded-lg aspect-square object-cover"
@@ -206,7 +206,7 @@ export default function Timeline() {
               initial="offscreen"
               whileInView="visible"
               transition={spring}
-              viewport={{ margin: "0px 0px -40% 0px" }}
+              viewport={{ margin: "0px 0px -50% 0px" }}
             >
               Presently
             </motion.h2>
@@ -216,7 +216,7 @@ export default function Timeline() {
               initial="offscreen"
               whileInView="visible"
               transition={spring}
-              viewport={{ margin: "0px 0px -40% 0px" }}
+              viewport={{ margin: "0px 0px -50% 0px" }}
             >
               <p className="text-lg text-muted-foreground sm:text-xl lg:text-2xl xl:text-3xl">
                 In the present timeline, Modern Engineers (India) continues to

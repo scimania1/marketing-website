@@ -35,7 +35,7 @@ export default function Home() {
           <div className="grid lg:order-1 lg:grid-rows-[2fr_1fr]">
             <div className="space-y-1 self-center py-2">
               <span className="py-2 text-sm text-slate-400 lg:text-lg xl:text-xl 2xl:text-2xl">
-                Redifining the Agriculture industry standard
+                Redefining the Agriculture industry standard
               </span>
               <h1
                 className={`${playfairDisplay.className} text-balance text-3xl lg:text-4xl min-[1600px]:text-6xl`}
@@ -89,7 +89,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="bottom-12 left-1/2 hidden max-w-xl -translate-x-1/2 grid-cols-[auto_1fr] items-center pr-20 gap-3 rounded-xl bg-background shadow-lg lg:absolute min-[1750px]:grid">
+            <div className="bottom-12 left-1/2 hidden z-30 max-w-xl -translate-x-1/2 grid-cols-[auto_1fr] items-center pr-18 gap-3 rounded-xl bg-background shadow-lg lg:absolute min-[1750px]:grid">
               <div className="grid items-center justify-center">
                 <div className="relative size-[150px] rounded-l-xl bg-slate-300 overflow-hidden">
                   <Image
@@ -113,11 +113,11 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-primary text-primary-foreground py-4 lg:py-8 xl:py-16">
-        <h1
+        <h2
           className={`text-2xl lg:text-4xl xl:text-6xl ${playfairDisplay.className} text-center mb-6 lg:mb-12 xl:mb-20 font-medium`}
         >
           Milestones and Expertise: A Legacy of Excellence
-        </h1>
+        </h2>
         <MaxWidthWrapper>
           <div className="grid md:grid-cols-[1fr_2px_1fr_2px_1fr] gap-4">
             <div className="space-y-1 text-center ">

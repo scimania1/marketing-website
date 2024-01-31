@@ -67,7 +67,7 @@ export default function About() {
               <Image
                 src="/OwnerImage.png"
                 alt="Image of Owner"
-                className="aspect-[4/3] scale-[1.15]"
+                className="aspect-[4/3] scale-[1.15] object-contain"
                 fill
               />
             </div>

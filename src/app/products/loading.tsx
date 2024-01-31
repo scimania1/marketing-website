@@ -18,7 +18,7 @@ export default function ProductsLoader() {
             backgroundSize: "24px 24px",
           }}
         ></div>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl z-30">
+        <h1 className="text-3xl tracking-wide md:text-5xl text-balance lg:text-6xl z-30">
           <span>Gear up for success with our</span>
           <span className="sm:mt-3 sm:block">
             {" "}

@@ -10,9 +10,20 @@ export const metadata: Metadata = {
     default: "Modern Engineers (India)",
     template: "%s | Modern Engineers (India)",
   },
-  keywords: ["Modern Engineers (India)", "Agricultural Implement Parts"],
+  keywords: [
+    "Modern Engineers (India)",
+    "Agricultural Implement Parts",
+    "Gourav DLX Bolts",
+    "Gourav DLX Tractor Parts",
+    "Gourav DLX John Deere Tractor Weight Bolts ",
+    "MEI Agricultural Implement Parts",
+    "MEI Tractor Trolley parts",
+  ],
   metadataBase: new URL(baseURL),
-  description: "The standard for Agricultural Implement Parts and Equipment",
+  // description: "The standard for Agricultural Implement Parts and Equipment",
+  description:
+    "Modern Engineers (India), based in Jalandhar, Punjab, stands as the benchmark for Agricultural Implement Parts and Equipment. With over a decade of innovation and precision manufacturing, our top-tier products are trusted Agricultural machinery manufacturers. We are dedicated to delivering excellence from our base in the heart of Punjab.",
+  category: "Agricultural Implement Parts and Equipment",
   openGraph: {
     title: "Modern Engineers (India)",
     description: "The standard for Agricultural Implement Parts and Equipment",

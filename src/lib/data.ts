@@ -357,7 +357,7 @@ export const fetchFilteredProductsCount = cache(
   },
 );
 
-export async function fetchAllProductIds() {
+export const fetchAllProductIds = cache(async () => {
   try {
     await connectDb();
   } catch (err) {
@@ -366,4 +366,46 @@ export async function fetchAllProductIds() {
   }
   const ids = await Products.find({}).select("_id").lean();
   return ids;
-}
+});
+
+type RelatedProducts = {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  imageURL: string;
+};
+
+export const fetchRelatedProducts = cache(
+  async (id: string, categories: string[]) => {
+    if (!mongoose.isValidObjectId(id)) {
+      return null;
+    }
+    const _id = new mongoose.Types.ObjectId(id);
+    try {
+      await connectDb();
+    } catch (err) {
+      console.error("[ERROR] Failed to Connect to Database", err);
+      return null;
+    }
+
+    const res: RelatedProducts[] = await Products.aggregate([
+      {
+        $match: {
+          $and: [{ _id: { $ne: _id } }, { tags: { $in: categories } }],
+        },
+      },
+      { $sample: { size: 10 } },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          imageURL: 1,
+        },
+      },
+    ]);
+
+    if (!res.length) {
+      return null;
+    }
+    return res;
+  },
+);
