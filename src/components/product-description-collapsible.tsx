@@ -18,7 +18,6 @@ export default function ProductDescriptionCollapsible({
   detailName: string;
 }) {
   const [open, setOpen] = useState(false);
-  console.log({ details, detailName });
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <div className="py-3 space-y-3">

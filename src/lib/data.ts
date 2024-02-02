@@ -364,11 +364,11 @@ export const fetchAllProductIds = cache(async () => {
     console.error("[ERROR] Failed to Connect to Database", err);
     return null;
   }
-  const ids = await Products.find({}).select("_id").lean();
+  const ids = await Products.find({}).select({ name: 1, _id: 1 }).lean();
   return ids;
 });
 
-type RelatedProducts = {
+export type RelatedProducts = {
   _id: mongoose.Types.ObjectId;
   name: string;
   imageURL: string;

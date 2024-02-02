@@ -22,6 +22,7 @@ import {
 
 export default function ProductCard(props: ProductProjected) {
   const { _id, name, sizes, material, imageURL } = props;
+  const linkedName = name.split("/")[0].trim().replaceAll(" ", "-");
   const mainName = name.split("/").at(0) || name;
   let displayMaterial = material;
   if (displayMaterial.includes(":")) {
@@ -92,7 +93,7 @@ export default function ProductCard(props: ProductProjected) {
           </TooltipProvider>
         </div>
         <Link
-          href={`/products/${_id}`}
+          href={`/products/${linkedName}/${_id}`}
           scroll={false}
           className="inline-flex items-center justify-center lg:flex-grow"
         >
