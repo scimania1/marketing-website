@@ -31,7 +31,7 @@ export default function RelatedProductsCarousel({
         {relatedProducts.map((relatedProduct) => (
           <CarouselItem
             key={`${relatedProduct._id}`}
-            className="sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
+            className="sm:basis-1/2 md:basis-1/3 xl:basis-1/5"
           >
             <Link
               href={`/products/${relatedProduct.name.split("/")[0].trim().replaceAll(" ", "-")}/${relatedProduct._id}`}
@@ -47,7 +47,7 @@ export default function RelatedProductsCarousel({
                     height={300}
                   />
                   <div
-                    className={`${playfairDisplay.className} absolute tracking-wide text-lg font-medium bottom-4 border border-border left-4 rounded-lg p-2 bg-secondary/60 text-secondary-foreground backdrop-blur-lg`}
+                    className={`${playfairDisplay.className} absolute tracking-wide text-lg sm:text-sm font-medium bottom-4 border border-border left-4 rounded-lg p-2 bg-secondary/60 text-secondary-foreground backdrop-blur-lg`}
                   >
                     {shortenName(relatedProduct.name, 20)}
                   </div>

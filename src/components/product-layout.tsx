@@ -20,7 +20,7 @@ export default function ProductLayout(product: Product) {
     hardening: product.hardening,
   };
   return (
-    <article className="px-6 grid gap-4 lg:grid-cols-2">
+    <article className="px-6 grid gap-4 lg:grid-cols-2 lg:gap-8">
       <figure className="relative bg-muted lg:h-full rounded-xl aspect-square lg:aspect-auto">
         <Image
           className="rounded-xl object-contain"

@@ -95,7 +95,7 @@ export default function Timeline() {
       <MaxWidthWrapper className="max-w-screen-xl py-8 md:py-16 lg:py-20 xl:py-24">
         <div className="py-4 sm:px-8 lg:py-8">
           <div className="space-y-4 mb-6 lg:mb-12 md:space-y-8">
-            <h1 className="text-center tracking-tight font-extrabold text-3xl sm:text-4xl md:text-5xl xl:text-6xl">
+            <h1 className="text-center tracking-tight font-extrabold text-3xl sm:text-4xl md:text-5xl xl:text-7xl">
               From Inception to Impact -{" "}
               <span className="sm:block">
                 The Modern Engineers (India) Story
