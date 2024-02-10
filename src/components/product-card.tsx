@@ -22,7 +22,11 @@ import {
 
 export default function ProductCard(props: ProductProjected) {
   const { _id, name, sizes, material, imageURL } = props;
-  const linkedName = name.split("/")[0].trim().replaceAll(" ", "-");
+  const linkedName = name
+    .split("/")[0]
+    .trim()
+    .replaceAll(" ", "-")
+    .replaceAll("&", "and");
   const mainName = name.split("/").at(0) || name;
   let displayMaterial = material;
   if (displayMaterial.includes(":")) {
