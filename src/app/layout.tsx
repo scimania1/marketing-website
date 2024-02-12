@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseURL),
   // description: "The standard for Agricultural Implement Parts and Equipment",
   description:
-    "Modern Engineers (India), based in Jalandhar, Punjab, stands as the benchmark for Agricultural Implement Parts and Equipment. With over a decade of innovation and precision manufacturing, our top-tier products are trusted Agricultural machinery manufacturers. We are dedicated to delivering excellence from our base in the heart of Punjab.",
+    "Modern Engineers (India), based in Jalandhar, Punjab, stands as the benchmark for Agricultural Implement Parts and Equipment.",
   category: "Agricultural Implement Parts and Equipment",
   openGraph: {
     title: "Modern Engineers (India)",
