@@ -37,6 +37,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     sitemapProductsArray = products.map((product) => ({
       url: `${baseURL}/products/${product.name.split("/")[0].trim().replaceAll(" ", "-").replaceAll("&", "and")}/${product._id}`,
       lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
     }));
     return [...baseSitemap, ...sitemapProductsArray];
   }
