@@ -43,6 +43,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-icon.png",
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
