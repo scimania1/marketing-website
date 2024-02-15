@@ -3,39 +3,15 @@ import { playfairDisplay } from "../fonts";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import Timeline from "@/components/timeline";
 import { Suspense } from "react";
-import { Quote } from "lucide-react";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Mission from "@/components/mission";
+import { Quote } from "lucide-react";
+import Typewriter from "@/components/typewriter";
+import CeoAchievements from "@/components/ceo-achievements";
 
 export const metadata: Metadata = {
   title: "About Us",
 };
-
-function ShowcaseItem({
-  className,
-  children,
-  title,
-  reverse = false,
-}: {
-  className?: string;
-  children: React.ReactNode;
-  title: string;
-  reverse?: boolean;
-}) {
-  return (
-    <div
-      className={cn(
-        `relative grid gap-4 ${reverse ? "md:grid-cols-[3fr_1fr]" : "md:grid-cols-[1fr_3fr]"} md:gap-0`,
-        className,
-      )}
-    >
-      <h2 className={`sticky self-start top-0 ${reverse ? "md:order-2" : ""}`}>
-        {title}
-      </h2>
-      {children}
-    </div>
-  );
-}
 
 export default function About() {
   return (
@@ -52,7 +28,7 @@ export default function About() {
           }}
         ></div>
         <h1
-          className={`text-3xl tracking-wide md:text-5xl text-balance lg:text-6xl z-30 ${playfairDisplay.className}`}
+          className={`text-3xl tracking-wide px-4 md:text-5xl text-balance lg:text-6xl z-30 ${playfairDisplay.className}`}
         >
           Introducing Modern Engineers (India)
           <div className="text-muted-foreground sm:mt-2 lg:mt-3">
@@ -60,87 +36,83 @@ export default function About() {
           </div>
         </h1>
       </section>
-      <MaxWidthWrapper className="my-8">
-        <div className="py-4 sm:px-8 lg:py-16 xl:py-28">
-          <div className="grid lg:grid-cols-[1fr_2fr] justify-center items-center gap-4">
-            <div className="relative bg-secondary aspect-[4/3] lg:h-full lg:aspect-auto rounded-md border overflow-hidden">
-              <Image
-                src="/OwnerImage.png"
-                alt="Image of Owner"
-                className="aspect-[4/3] scale-[1.15] object-contain"
-                fill
-              />
+      <MaxWidthWrapper className="my-12 lg:my-28">
+        <div className="grid gap-12 lg:grid-cols-2">
+          <Mission iconName="mission" title="Our Mission">
+            At Modern Engineers India, we are on a mission to revolutionize
+            agriculture with cutting-edge solutions and superior-quality
+            implement parts. Focused on innovation and sustainability, we
+            empower farmers, contributing to sector growth for increased
+            efficiency and productivity.
+          </Mission>
+          <Mission iconName="vision" title="Our Vision">
+            At Modern Engineers India, we envision leading the agricultural
+            machinery industry with innovative, sustainable solutions that
+            elevate productivity and contribute to the prosperity of the farming
+            community.
+          </Mission>
+        </div>
+      </MaxWidthWrapper>
+      <div className="bg-muted">
+        <MaxWidthWrapper>
+          <div className="pb-6 sm:pb-16 lg:pb-28">
+            <div className="py-12 sm:py-16 lg:py-20">
+              <Typewriter />
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-4">
-              <div className="p-4 relative rounded-lg border bg-card overflow-hidden shadow-sm grid gap-3">
-                <span className="absolute top-0 left-0 bottom-0 w-2 bg-muted" />
-                <div className="relative grid place-items-center w-full">
-                  <span className="absolute top-1/2 left-0 -translate-y-1/2 right-0 h-[2px] bg-muted" />
-                  <Quote
-                    className="mx-auto scale-[-1] fill-background"
-                    size={24}
-                  />
+            <div className="grid gap-8 md:gap-12 lg:gap-16 2xl:grid-cols-[1fr_0.1fr_1.5fr_0.1fr_1fr]">
+              <figure className="w-fit self-center mx-auto rounded-full border z-10 border-black/10 overflow-hidden bg-background ring-2 ring-black/10 ring-offset-[10px] sm:ring-offset-[20px] ring-offset-muted 2xl:col-start-3 2xl:col-end-4">
+                <Image
+                  src="/OwnerImage2.png"
+                  alt="CEO of Modern Engineers (India) - Mr. Parduman Singh"
+                  width={400}
+                  height={1500}
+                  className="translate-y-4 -translate-x-4 w-72 h-auto sm:w-80 md:w-[400px] lg:w-auto object-cover"
+                />
+              </figure>
+              <div className="grid gap-12 sm:grid-cols-2 2xl:grid-cols-1 2xl:col-start-1 2xl:col-end-2 2xl:row-start-1 2xl:row-end-2 2xl:my-10">
+                <div className="flex flex-col justify-between self-start tracking-tight font-medium text-md sm:self-stretch md:text-lg xl:text-xl text-center p-4 bg-background rounded-xl shadow-lg lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2">
+                  <div className="relative mt-3">
+                    <div className="w-full h-[2px] bg-muted"></div>
+                    <Quote className="-scale-100 fill-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                  </div>
+                  <div className="py-5 px-2">
+                    At Modern Engineers (India), we craft precision and quality
+                    into every component, cultivating a legacy of excellence in
+                    agricultural machinery
+                  </div>
+                  <div className="relative mb-3">
+                    <div className="w-full h-[2px] bg-muted"></div>
+                    <Quote className="fill-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                  </div>
                 </div>
-                <h1
-                  className={`${playfairDisplay.className} px-4 text-md md:text-lg xl:text-xl`}
-                >
-                  At Modern Engineers (India), we craft precision and quality
-                  into every component, cultivating a legacy of excellence in
-                  agricultural machinery
-                </h1>
-                <div className="relative grid place-items-center">
-                  <span className="absolute top-1/2 left-0 -translate-y-1/2 right-0 h-[2px] bg-muted" />
-                  <Quote
-                    className="relative mx-auto fill-background scale-100"
-                    size={24}
-                  />
+                <div className="self-end bg-primary text-md md:text-lg lg:p-8 xl:text-xl text-pretty text-primary-foreground p-6 rounded-xl shadow-lg border">
+                  Established in 2010, Modern Engineers (India) is a prominent
+                  manufacturer of tractor-drawn agricultural implement parts.
+                  Led by the visionary owner,{" "}
+                  <span className="font-bold">Parduman Singh</span>, the company
+                  has garnered a reputable position in the industry.
                 </div>
               </div>
-              <div className="bg-primary text-md md:text-lg lg:p-8 xl:text-xl text-pretty text-primary-foreground p-6 rounded-lg shadow-sm border">
-                Established in 2010, Modern Engineers (India) is a prominent
-                manufacturer of tractor-drawn agricultural implement parts, with
-                its main office situated in Jalandhar, Punjab. Led by the
-                visionary owner,{" "}
-                <span className="font-bold">Parduman Singh</span>, the company
-                has garnered a reputable position in the industry.
+              <div className="grid gap-12 text-center 2xl:text-center mb-8 2xl:mb-0 2xl:col-start-5 2xl:col-end-6">
+                <CeoAchievements
+                  title="Years of Experience"
+                  amount={30}
+                  symbol="+"
+                />
+                <CeoAchievements
+                  title="Satisfaction of Clients"
+                  amount={100}
+                  symbol="%"
+                />
+                <CeoAchievements title="Clients All Over India" amount={33} />
               </div>
             </div>
           </div>
-        </div>
-      </MaxWidthWrapper>
+        </MaxWidthWrapper>
+      </div>
       <Suspense>
         <Timeline />
       </Suspense>
-      {/* <section className="bg-secondary text-secondary-foreground py-12"> */}
-      {/*   <h1 className="text-center tracking-tight font-extrabold text-3xl sm:text-4xl md:text-5xl xl:text-6xl"> */}
-      {/*     Our Infrastructure */}
-      {/*   </h1> */}
-      {/*   <h2 className="text-center py-4"> */}
-      {/*     At Modern Engineers India, our state-of-the-art infrastructure is */}
-      {/*     equipped with cutting-edge facilities, fostering innovation and */}
-      {/*     ensuring top-notch manufacturing processes for high-quality */}
-      {/*     agricultural implement parts. */}
-      {/*   </h2> */}
-      {/* <MaxWidthWrapper className="py-8"> */}
-      {/*   <div className="space-y-4"> */}
-      {/*     <ShowcaseItem title="Bandsaw Machine"> */}
-      {/*       <div className="aspect-video bg-background rounded-lg shadow-sm"></div> */}
-      {/*     </ShowcaseItem> */}
-      {/*     <ShowcaseItem title="CNC Machine" reverse> */}
-      {/*       <div className="aspect-video bg-background rounded-lg shadow-sm order-1"></div> */}
-      {/*     </ShowcaseItem> */}
-      {/*     <ShowcaseItem title="Forging Press"> */}
-      {/*       <div className="aspect-video bg-background rounded-lg shadow-sm"></div> */}
-      {/*     </ShowcaseItem> */}
-      {/*     <ShowcaseItem title="MIG Welding Setup" reverse> */}
-      {/*       <div className="aspect-video bg-background rounded-lg shadow-sm order-1"></div> */}
-      {/*     </ShowcaseItem> */}
-      {/*     <ShowcaseItem title="H Frame Power Press"> */}
-      {/*       <div className="aspect-video bg-background rounded-lg shadow-sm"></div> */}
-      {/*     </ShowcaseItem> */}
-      {/*   </div> */}
-      {/* </MaxWidthWrapper> */}
-      {/* </section> */}
     </>
   );
 }
