@@ -20,10 +20,9 @@ export const metadata: Metadata = {
     "MEI Tractor Trolley parts",
   ],
   metadataBase: new URL(baseURL),
-  // description: "The standard for Agricultural Implement Parts and Equipment",
   description:
     "Modern Engineers (India), based in Jalandhar, Punjab, stands as the benchmark for Agricultural Implement Parts and Equipment.",
-  category: "Agricultural Implement Parts and Equipment",
+  category: "Agricultural Implement Parts and Equipment, Fasteners",
   openGraph: {
     title: "Modern Engineers (India)",
     description: "The standard for Agricultural Implement Parts and Equipment",

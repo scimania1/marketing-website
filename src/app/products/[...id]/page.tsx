@@ -33,11 +33,22 @@ export async function generateMetadata(
   const product = await fetchProductById(id);
   const previousImages = (await parent).openGraph?.images || [];
 
+  const nameInKeywords =
+    product !== null
+      ? product.name.split("/").map((keyword) => keyword.trim())
+      : [];
+
   return {
     title: `${product?.name.split("/").at(0) || product?.name} | Modern Engineers (India)`,
-    description: "Modern Engineers (India) " + product?.name,
+    description: `${product?.name
+      .split("/")
+      .map((word) => word.trim())
+      .join(
+        ", ",
+      )}, Categories - ${product?.tags.join(", ")}, ${product?.keywords.join(", ")} - Modern Engineers (India)`,
+    category: `${product?.tags.join(", ")}, ${product?.keywords.join(", ")}`,
     keywords: [
-      product?.name || "",
+      ...nameInKeywords,
       ...(product?.material || []),
       ...(product?.sizes || []),
       ...(product?.keywords || []),
