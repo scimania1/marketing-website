@@ -9,5 +9,5 @@ export default function ProductsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className="flex flex-col flex-1 flex-grow">{children}</div>;
 }
