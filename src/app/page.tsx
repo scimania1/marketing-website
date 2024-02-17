@@ -71,7 +71,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-2 py-2 lg:py-3 xl:gap-3">
                 {categories.map((category) => (
                   <Link
-                    href={`/products?categories=${category}`}
+                    href={`/products?categories=${category.replaceAll(" ", "+")}`}
                     key={category}
                     passHref
                   >
