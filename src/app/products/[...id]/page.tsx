@@ -39,7 +39,7 @@ export async function generateMetadata(
       : [];
 
   return {
-    title: `${product?.name.split("/").at(0) || product?.name} | Modern Engineers (India)`,
+    title: `${product?.name.split("/").at(0) || product?.name || "Not Found"} | Modern Engineers (India)`,
     description: `${product?.name
       .split("/")
       .map((word) => word.trim())
