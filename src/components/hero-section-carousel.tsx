@@ -64,6 +64,51 @@ export default function HeroSectionCarousel() {
             </Card>
           </div>
         </CarouselItem>
+        <CarouselItem>
+          <div className="p-1">
+            <Card>
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/ShackleBolt.png"
+                  alt="Shackle Pin"
+                  className="object-cover w-full h-full"
+                  width={1000}
+                  height={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="p-1">
+            <Card>
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/SpindleShaft.png"
+                  alt="Spindle Shaft"
+                  className="object-cover w-full h-full"
+                  width={1000}
+                  height={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
+        <CarouselItem>
+          <div className="p-1">
+            <Card>
+              <CardContent className="p-0 flex bg-secondary aspect-square items-center justify-center">
+                <Image
+                  src="/DrobberPinSRP.png"
+                  alt="Drobber Pin SRP"
+                  className="object-cover w-full h-full"
+                  width={1000}
+                  height={1000}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
       </CarouselContent>
       <CarouselPrevious className="left-4 p-1 lg:left-8" />
       <CarouselNext className="right-4 p-1 lg:right-8" />
