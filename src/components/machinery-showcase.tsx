@@ -79,7 +79,7 @@ export default function MachinerySection() {
           alt="Bandsaw Machine - Modern Engineers (India)"
           fill
           className="object-contain"
-          sizes="(max-width: 768px) 100vw, (min-width: 768px) 40vw"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
         />
       ),
     },
@@ -93,7 +93,7 @@ export default function MachinerySection() {
           alt="CNC Machine - Modern Engineers (India)"
           fill
           className="object-contain"
-          sizes="(max-width: 768px) 100vw, (min-width: 768px) 40vw"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
         />
       ),
     },
@@ -107,7 +107,7 @@ export default function MachinerySection() {
           alt="H Frame Power Press - Modern Engineers (India)"
           fill
           className="object-contain"
-          sizes="(max-width: 768px) 100vw, (min-width: 768px) 40vw"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
         />
       ),
     },
@@ -121,7 +121,7 @@ export default function MachinerySection() {
           alt="Forging Press - Modern Engineers (India)"
           fill
           className="object-contain"
-          sizes="(max-width: 768px) 100vw, (min-width: 768px) 40vw"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
         />
       ),
     },
@@ -135,7 +135,7 @@ export default function MachinerySection() {
           alt="MIG Welding Machine - Modern Engineers (India)"
           fill
           className="object-contain"
-          sizes="(max-width: 768px) 100vw, (min-width: 768px) 40vw"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
         />
       ),
     },
