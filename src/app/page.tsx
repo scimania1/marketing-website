@@ -7,6 +7,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { Separator } from "@/components/ui/separator";
 import NumberCount from "@/components/number-count";
 import Image from "next/image";
+import MachinerySection from "@/components/machinery-showcase";
 
 const heroSectionTitle =
   "Modern Engineers (India) - Perfecting your Machinery Components";
@@ -27,7 +28,7 @@ const categories = [
 export default function Home() {
   return (
     <>
-      <div className="h-full px-4 py-2 md:px-8 md:py-4 xl:px-16">
+      <div className="h-full px-4 py-2 pb-4 md:pb-8 md:px-8 md:py-10 lg:pb-20">
         <div className="relative grid grid-cols-1 md:gap-2 lg:grid-cols-2 lg:gap-4">
           <div className="pb-4 pt-2 lg:order-2 lg:px-0">
             <HeroSectionCarousel />
@@ -112,7 +113,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-primary text-primary-foreground py-4 lg:py-8 xl:py-16">
+      <div className="bg-primary text-primary-foreground py-8 lg:py-16 xl:py-24">
         <h2
           className={`text-2xl lg:text-4xl xl:text-6xl ${playfairDisplay.className} text-center mb-6 lg:mb-12 xl:mb-20 font-medium`}
         >
@@ -151,26 +152,7 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
       </div>
-      {/* <div className="py-4 lg:py-8 xl:py-16 px-2.5"> */}
-      {/*   <MaxWidthWrapper> */}
-      {/*     <div className="text-center mb-6 lg:mb-12 xl:mb-20 space-y-4 lg:space-y-6 xl:space-y-8"> */}
-      {/*       <h1 */}
-      {/*         className={`text-2xl lg:text-4xl xl:text-6xl ${playfairDisplay.className} font-medium`} */}
-      {/*       > */}
-      {/*         Featured Products */}
-      {/*       </h1> */}
-      {/*       <p className="text-muted-foreground text-md lg:text-lg xl:text-2xl"> */}
-      {/*         Discover excellence in our featured products at Modern Engineers */}
-      {/*         India. From top-tier tractor drawn agricultural implement parts to */}
-      {/*         advanced machinery components, each product embodies precision and */}
-      {/*         innovation. */}
-      {/*       </p> */}
-      {/*     </div> */}
-      {/*     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start mt-8"> */}
-      {/*       <ProductCard _id={new mongoose.Types.ObjectId("659a98f8d97857cf65fd8f4f")}/> */}
-      {/*     </div> */}
-      {/*   </MaxWidthWrapper> */}
-      {/* </div> */}
+      <MachinerySection />
     </>
   );
 }

@@ -40,7 +40,7 @@ export default function ProductCard(props: ProductProjected) {
           alt={name}
           width={300}
           height={300}
-          className="aspect-square h-44 w-full bg-slate-100"
+          className="h-44 w-full bg-slate-100 object-contain"
         />
       </picture>
       <div className="flex-1 flex-grow">

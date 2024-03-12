@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="relative">
       <body
         className={`${nunitoSans.className} relative bg-background min-h-screen antialiased font-sans`}
       >

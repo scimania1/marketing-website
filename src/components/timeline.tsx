@@ -54,7 +54,7 @@ function TimelineItem({
   return (
     <div className="relative grid grid-cols-[20px_1fr] gap-2 md:grid-cols-[0.75fr_50px_5fr]">
       <motion.h2
-        className={`${playfairDisplay.className} col-start-2 col-end-3 md:col-start-auto md:col-end-auto text-3xl sm:text-4xl md:justify-self-start md:self-start md:sticky top-0 left-0 lg:text-5xl xl:text-6xl`}
+        className={`${playfairDisplay.className} col-start-2 col-end-3 md:col-start-auto md:col-end-auto text-3xl sm:text-4xl md:justify-self-start md:self-start md:sticky top-[50vh] left-0 lg:text-5xl xl:text-6xl`}
         variants={variants}
         initial="offscreen"
         whileInView="visible"
@@ -63,7 +63,7 @@ function TimelineItem({
       >
         {timelineYear}
       </motion.h2>
-      <div className="sticky size-3 md:size-4 rounded-full ring-primary ring-8 bg-background -translate-x-[4px] md:-translate-x-[2px] self-start top-[60vh] inline-block"></div>
+      <div className="sticky size-3 md:size-4 rounded-full ring-primary ring-8 bg-background -translate-x-[4px] md:-translate-x-[2px] self-start top-[56vh] inline-block"></div>
       <motion.div
         className="space-y-3 lg:space-y-6"
         variants={variants}

@@ -130,23 +130,23 @@ export default function Footer() {
   return (
     <div className="border pt-8 pb-6 md:pt-10 lg:pt-14 xl:pt-20 px-6 md:px-8 border-t-secondary bg-background/75">
       <MaxWidthWrapper className="grid grid-cols-2 lg:grid-cols-3">
-        <div className="flex gap-4 pb-4 items-center col-span-2 lg:flex-col lg:col-span-1 lg:items-start">
-          <figure>
+        <div className="flex gap-4 pb-4 items-center col-span-2 lg:gap-2 lg:flex-col lg:col-span-1 lg:items-start">
+          <figure className="relative size-14 lg:size-20">
             <Image
               src="/Logo.png"
               alt="Modern Engineers (India) MEI Logo"
-              height={120}
-              width={120}
-              className="w-12 object-fit lg:w-20"
+              fill
+              sizes="20vw"
+              className="object-contain"
             />
           </figure>
-          <figure>
+          <figure className="relative size-14 lg:size-20">
             <Image
               src="/GouravDLXLogo.png"
               alt="Modern Engineers (India) GouravDLX Logo"
-              height={120}
-              width={120}
-              className="w-14 object-fit lg:w-20"
+              fill
+              sizes="20vw"
+              className="object-contain"
             />
           </figure>
           <div className="flex justify-center gap-2 items-center py-2 ml-auto lg:hidden">
