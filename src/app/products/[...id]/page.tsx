@@ -164,6 +164,10 @@ export default async function ProductIdPage({
       legalName: "Modern Engineers (India)",
       url: `${baseURL}`,
     },
+    rating: {
+      bestRating: 5,
+      ratingValue: 5,
+    },
     url: `${baseURL}/products/${linkedName}/${_id}`,
   };
   console.log("productJsonLd: ", JSON.stringify(productJsonLd, undefined, 2));
