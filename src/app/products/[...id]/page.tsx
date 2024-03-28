@@ -3,12 +3,13 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import ProductLayout from "@/components/product-layout";
 import RelatedProductsCarousel from "@/components/related-products-carousel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { baseURL } from "@/lib/constants";
 import {
   fetchAllProductIds,
   fetchProductById,
   fetchRelatedProducts,
 } from "@/lib/data";
-import { wait } from "@/lib/utils";
+import { createCategoryLink, wait } from "@/lib/utils";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -122,8 +123,62 @@ export default async function ProductIdPage({
   if (!data) {
     notFound();
   }
+  // TODO: define a good jsonLD
+  const linkedName = name
+    .split("/")[0]
+    .trim()
+    .replaceAll(" ", "-")
+    .replaceAll("&", "and");
+  const breadCrumbListJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "BreadCrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Modern Engineers (India)",
+        item: `${baseURL}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products Page",
+        item: `${baseURL}/products`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${name}`,
+        item: `${baseURL}/products/${linkedName}/${_id}`,
+      },
+    ],
+  };
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: data.name,
+    image: data.imageURL,
+    description: `${data.name}, Material: ${data.material.join(", ")}, Categories: ${data.tags.join(", ")}, ${data.keywords.join(", ")}`,
+    keywords: [...createCategoryLink(data.tags)],
+    manufacturer: {
+      legalName: "Modern Engineers (India)",
+      url: `${baseURL}`,
+    },
+    url: `${baseURL}/products/${linkedName}/${_id}`,
+  };
+  console.log("productJsonLd: ", JSON.stringify(productJsonLd, undefined, 2));
   return (
     <section className="py-10 lg:py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadCrumbListJsonLd),
+        }}
+      />
       <MaxWidthWrapper>
         <ProductLayout {...data} />
         <article className="px-6 py-4">

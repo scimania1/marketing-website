@@ -50,6 +50,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const organisationJsonLd = {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    legalName: "Modern Engineers (India)",
+    url: `${baseURL}`,
+    logo: `${baseURL}/Logo.png`,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: "91-8280390000",
+      email: "modernengineersindia@gmail.com",
+      url: `${baseURL}/contact-us`,
+    },
+    founder: {
+      "@type": "Person",
+      givenName: "Parduman",
+      familyName: "Singh",
+      url: `${baseURL}/about-us`,
+      image: `${baseURL}/OwnerImage2.png`,
+    },
+  };
   return (
     <html lang="en" suppressHydrationWarning className="relative">
       <body
@@ -60,6 +81,12 @@ export default function RootLayout({
           <main className="flex flex-col flex-1 flex-grow">{children}</main>
           <Footer />
         </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organisationJsonLd),
+          }}
+        />
       </body>
     </html>
   );

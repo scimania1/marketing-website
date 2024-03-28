@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { range } from "@/lib/utils";
 import React from "react";
 import FilterUI, { ClearAllFiltersButton } from "@/components/filter-ui";
+import { baseURL } from "@/lib/constants";
 
 function FiltersLoader() {
   const arr = range(1, 12);
@@ -51,22 +52,34 @@ export default function ProductsLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const breadcrumbListJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "BreadCrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Modern Engineers (India)",
+        item: `${baseURL}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products Page",
+        item: `${baseURL}/products`,
+      },
+    ],
+  };
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbListJsonLd),
+        }}
+      />
       <section
         className={`grid relative items-center justify-center text-center sm:px-6 py-6 h-72 lg:h-96 border-b-border [mask-image:linear-gradient(to_bottom,transparent,10%,white,90%,transparent)] ${playfairDisplay.className} `}
-        // style={{
-        //   backgroundColor: "#ffffff",
-        //   backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.07' fill-rule='evenodd'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3C/g%3E%3C/svg%3E");`,
-        // }}
-        // style={{
-        //   backgroundColor: "#ffffff",
-        //   opacity: 0.6,
-        //   backgroundImage:
-        //     "radial-gradient(#000000 0.6000000000000001px, transparent 0.6000000000000001px), radial-gradient(#000000 0.6000000000000001px, #ffffff 0.6000000000000001px)",
-        //   backgroundSize: "24px 24px",
-        //   backgroundPosition: "0 0,12px 12px",
-        // }}
       >
         <div
           className="absolute inset-0"

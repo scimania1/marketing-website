@@ -4,14 +4,39 @@ import { Mail, MapPinned, PhoneCall } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ContactUsForm from "@/components/contact-us-form";
 import { Metadata } from "next";
+import { baseURL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Contact Us",
 };
 
 export default function ContactUs() {
+  const breadcrumbListJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "BreadCrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Modern Engineers (India)",
+        item: `${baseURL}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Contact Us Page",
+        item: `${baseURL}/contact-us`,
+      },
+    ],
+  };
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbListJsonLd),
+        }}
+      />
       <section className="text-center grid place-items-center h-72 lg:h-96 [mask-image:linear-gradient(to_bottom,transparent,10%,white,90%,transparent)]">
         <div
           className="absolute inset-0"
@@ -23,11 +48,6 @@ export default function ContactUs() {
             backgroundSize: "24px 24px",
           }}
         ></div>
-        {/* <h1 */}
-        {/*   className={`${playfairDisplay.className} pb-6 text-center text-3xl tracking-wide lg:pb-12 lg:text-4xl xl:text-5xl 2xl:text-7xl`} */}
-        {/* > */}
-        {/*   Contact Us */}
-        {/* </h1> */}
         <h1
           className={`text-3xl tracking-wide md:text-5xl text-balance lg:text-6xl z-30 ${playfairDisplay.className}`}
         >

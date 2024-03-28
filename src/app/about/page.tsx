@@ -8,14 +8,40 @@ import Mission from "@/components/mission";
 import { Quote } from "lucide-react";
 import Typewriter from "@/components/typewriter";
 import CeoAchievements from "@/components/ceo-achievements";
+import { baseURL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About Us",
 };
 
 export default function About() {
+  const breadcrumbListJsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "BreadCrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Modern Engineers (India)",
+        item: `${baseURL}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "About Page",
+        item: `${baseURL}/about`,
+      },
+    ],
+  };
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbListJsonLd),
+        }}
+      />
+
       <section className="text-center grid place-items-center h-72 lg:h-96 [mask-image:linear-gradient(to_bottom,transparent,10%,white,90%,transparent)]">
         <div
           className="absolute inset-0"
