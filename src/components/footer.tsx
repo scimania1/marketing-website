@@ -233,9 +233,17 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <h3 className="text-sm lg:text-base text-muted-foreground flex-grow lg:flex-grow-0 lg:ml-auto text-center">
-            &copy; {`${new Date().getFullYear()}`} Modern Engineers (India)
-          </h3>
+          <div className="text-sm lg:text-base text-muted-foreground flex gap-4 flex-grow lg:flex-grow-0 lg:ml-auto text-center">
+            <h3>
+              Designed by{" "}
+              <span className="italic whitespace-nowrap underline underline-offset-4">
+                gs-decodes
+              </span>
+            </h3>
+            <h3>
+              &copy; {`${new Date().getFullYear()}`} Modern Engineers (India)
+            </h3>
+          </div>
         </div>
       </MaxWidthWrapper>
       <MaxWidthWrapper>

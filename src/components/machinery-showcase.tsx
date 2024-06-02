@@ -86,10 +86,10 @@ export default function MachinerySection() {
     {
       title: "CNC Machine",
       description:
-        "Our machine shop is equipped with two state-of-the-art CNC machines that offer precise turning capabilities for various materials. These machines can handle workpieces with diameters ranging from 12mm to 75mm and lengths from 45mm up to 450mm. Their versatility extends to a wide range of metals, including MS, EN8D, EN9, EN15, EN19, EN24, and EN31. This allows us to produce complex components with exceptional accuracy and efficiency.",
+        "Our machine shop is equipped with two state-of-the-art CNC machines that offer precise turning capabilities for various materials. These machines can handle workpieces with diameters ranging from 12mm to 75mm and lengths from 45mm up to 600mm. Their versatility extends to a wide range of metals, including MS, EN8D, EN9, EN15, EN19, EN24, and EN31. This allows us to produce complex components with exceptional accuracy and efficiency.",
       display: (
         <Image
-          src="/CNCMachine.png"
+          src="/CNC-upscaled.png"
           alt="CNC Machine - Modern Engineers (India)"
           fill
           className="object-contain"
