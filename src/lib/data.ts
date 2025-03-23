@@ -29,10 +29,10 @@ function concatCategories(categories: string[]) {
 export const fetchTags = cache(async () => {
   // fetch data from redis first to check if there is any cache. Store the tags in a set inside redis
   // as we only have 12 categories for now, we can just use smembers.
-  const data = await redis.smembers<string[]>("products:tags");
-  if (data.length > 0) {
-    return data;
-  }
+  //const data = await redis.smembers<string[]>("products:tags");
+  //if (data.length > 0) {
+  //  return data;
+  //}
   try {
     await connectDb();
   } catch (err) {
@@ -40,10 +40,10 @@ export const fetchTags = cache(async () => {
     return null;
   }
   const tags = await Products.distinct("tags").lean();
-  const tx = redis.multi();
-  tx.sadd("products:tags", ...tags);
-  tx.expire("products:tags", EXPIRE_TIME, "NX");
-  await tx.exec();
+  //const tx = redis.multi();
+  //tx.sadd("products:tags", ...tags);
+  //tx.expire("products:tags", EXPIRE_TIME, "NX");
+  //await tx.exec();
   return tags;
 });
 
@@ -53,13 +53,13 @@ export const fetchProductById = cache(async (_id: string) => {
     return null;
   }
   // get data from redis if it exists
-  const data: Product[] | null = await redis.json.get(
-    `products:id:${_id}`,
-    "$",
-  );
-  if (data) {
-    return data[0];
-  }
+  //const data: Product[] | null = await redis.json.get(
+  //  `products:id:${_id}`,
+  //  "$",
+  //);
+  //if (data) {
+  //  return data[0];
+  //}
   try {
     await connectDb();
   } catch (err) {
@@ -70,10 +70,10 @@ export const fetchProductById = cache(async (_id: string) => {
   if (!productData) {
     return null;
   }
-  const tx = redis.multi();
-  tx.json.set(`products:id:${_id}`, "$", JSON.stringify(productData));
-  tx.expire(`products:id:${_id}`, EXPIRE_TIME, "NX");
-  await tx.exec();
+  //const tx = redis.multi();
+  //tx.json.set(`products:id:${_id}`, "$", JSON.stringify(productData));
+  //tx.expire(`products:id:${_id}`, EXPIRE_TIME, "NX");
+  //await tx.exec();
   return productData;
 });
 
@@ -81,15 +81,15 @@ export const fetchAllProducts = cache(
   async (page: number, categories: string[]) => {
     // check data inside redis and return the data if it exists.
     // then connect to mongodb.
-    const redisKey = `products:category:${concatCategories(categories)}`;
-    const res = await redis.hmget(redisKey, `page-${page}`, `count`);
+    //const redisKey = `products:category:${concatCategories(categories)}`;
+    //const res = await redis.hmget(redisKey, `page-${page}`, `count`);
     // if (data) {
     //   return data;
     // }
-    if (res && res[`page-${page}`] && res.count) {
-      allProductsCount = Number(res.count);
-      return res[`page-${page}`] as ProductProjected[];
-    }
+    //if (res && res[`page-${page}`] && res.count) {
+    //  allProductsCount = Number(res.count);
+    //  return res[`page-${page}`] as ProductProjected[];
+    //}
     try {
       await connectDb();
     } catch (err) {
@@ -152,10 +152,10 @@ export const fetchAllProducts = cache(
       } else {
         categoryKey = "null";
       }
-      await redis.hset(redisKey, {
-        [`page-${page}`]: result[0].data,
-        count: result[0].count[0].count,
-      });
+      //await redis.hset(redisKey, {
+      //  [`page-${page}`]: result[0].data,
+      //  count: result[0].count[0].count,
+      //});
       return result[0].data;
     }
     return null;
@@ -165,14 +165,14 @@ export const fetchAllProducts = cache(
 export const fetchFilteredProducts = cache(
   async (page: number, query: string, categories: string[]) => {
     // mongodb
-    const redisKey = `products:query:${query}:category:${concatCategories(
-      categories,
-    )}`;
-    const res = await redis.hmget(redisKey, `page-${page}`, "count");
-    if (res && res[`page-${page}`] && res.count) {
-      filteredProductsCount = Number(res.count);
-      return res[`page-${page}`] as ProductProjected[];
-    }
+    //const redisKey = `products:query:${query}:category:${concatCategories(
+    //  categories,
+    //)}`;
+    //const res = await redis.hmget(redisKey, `page-${page}`, "count");
+    //if (res && res[`page-${page}`] && res.count) {
+    //  filteredProductsCount = Number(res.count);
+    //  return res[`page-${page}`] as ProductProjected[];
+    //}
     // if (data) {
     //   return data;
     // }
@@ -303,12 +303,12 @@ export const fetchFilteredProducts = cache(
       } else {
         filteredProductsCount = 0;
       }
-      if (result[0].data.length) {
-        await redis.hset(redisKey, {
-          [`page-${page}`]: result[0].data,
-          count: result[0].count[0].count,
-        });
-      }
+      //if (result[0].data.length) {
+      //  await redis.hset(redisKey, {
+      //    [`page-${page}`]: result[0].data,
+      //    count: result[0].count[0].count,
+      //  });
+      //}
       return result[0].data;
     } catch (error) {
       console.error(

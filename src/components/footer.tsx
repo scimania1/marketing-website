@@ -240,9 +240,7 @@ export default function Footer() {
                 gs-decodes
               </span>
             </h3>
-            <h3>
-              &copy; {`${new Date().getFullYear()}`} Modern Engineers (India)
-            </h3>
+            <h3>&copy; 2025 Modern Engineers (India)</h3>
           </div>
         </div>
       </MaxWidthWrapper>
