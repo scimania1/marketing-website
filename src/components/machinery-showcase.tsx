@@ -70,13 +70,13 @@ function StickyScroll({ contents }: { contents: StickyScrollContent[] }) {
 export default function MachinerySection() {
   const contents: StickyScrollContent[] = [
     {
-      title: "Bandsaw Machine",
+      title: "VMC Machine",
       description:
-        "Our workshop boasts two versatile bandsaw machines capable of handling a wide range of material diameters, from a delicate 10mm up to a substantial 100mm. This allows us to tackle a diverse range of projects efficiently.",
+        "Our machining facility is equipped with two high-performance Vertical Machining Centers (VMCs) powered by Fanuc 0i MF Controllers, designed to deliver superior precision and efficiency. Each machine is driven by an 11/15 kW spindle motor with a maximum speed of 8000 rpm and a BBT-40 spindle taper, ensuring excellent rigidity and surface finish. High-precision C3 class ball screws, roller-type LM guideways on all axes, and laser-calibrated positioning provide outstanding accuracy and repeatability. These VMCs are further enhanced with spindle air blast, rigid tapping, automatic lubrication, full splash guarding, and advanced coolant and chip flushing systems, making them ideal for continuous and reliable performance. With 24-tool twin arm automatic tool changers, servo brakes on the Z-axis, telescopic covers, and provisions for a 4th axis, our two VMCs are fully capable of handling complex and demanding machining tasks with exceptional consistency.",
       display: (
         <Image
-          src="/BandsawMachine.png"
-          alt="Bandsaw Machine - Modern Engineers (India)"
+          src="/VMC.png"
+          alt="VMC Machine - Modern Engineers (India)"
           fill
           className="object-contain"
           sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
@@ -86,7 +86,7 @@ export default function MachinerySection() {
     {
       title: "CNC Machine",
       description:
-        "Our machine shop is equipped with two state-of-the-art CNC machines that offer precise turning capabilities for various materials. These machines can handle workpieces with diameters ranging from 12mm to 75mm and lengths from 45mm up to 600mm. Their versatility extends to a wide range of metals, including MS, EN8D, EN9, EN15, EN19, EN24, and EN31. This allows us to produce complex components with exceptional accuracy and efficiency.",
+        "Our machine shop is equipped with three state-of-the-art CNC machines that offer precise turning capabilities for various materials. These machines can handle workpieces with diameters ranging from 12mm to 75mm and lengths from 45mm up to 600mm. Their versatility extends to a wide range of metals, including MS, EN8D, EN9, EN15, EN19, EN24, and EN31. This allows us to produce complex components with exceptional accuracy and efficiency.",
       display: (
         <Image
           src="/CNC-upscaled.png"
@@ -126,9 +126,37 @@ export default function MachinerySection() {
       ),
     },
     {
+      title: "Drill Machine",
+      description:
+        "Our workshop is equipped with five precision drill machines that deliver reliable and accurate drilling operations across a wide range of materials. Built with a sturdy column design and a high-quality spindle system, these machines ensure smooth operation and consistent hole accuracy. The adjustable work table and heavy-duty base provide excellent stability, making them ideal for both small and medium-sized components. With their robust construction and ease of use, these drill machines allow us to efficiently perform drilling, reaming, and tapping operations, supporting a variety of machining requirements with speed and precision.",
+      display: (
+        <Image
+          src="/DrillMachine.png"
+          alt="Drill Machine - Modern Engineers (India)"
+          fill
+          className="object-contain"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
+        />
+      ),
+    },
+    {
+      title: "Bandsaw Machine",
+      description:
+        "Our workshop boasts two versatile bandsaw machines capable of handling a wide range of material diameters, from a delicate 10mm up to a substantial 100mm. This allows us to tackle a diverse range of projects efficiently.",
+      display: (
+        <Image
+          src="/BandsawMachine.png"
+          alt="Bandsaw Machine - Modern Engineers (India)"
+          fill
+          className="object-contain"
+          sizes="(max-width: 768px) 100vw, (min-width: 769px) 40vw"
+        />
+      ),
+    },
+    {
       title: "MIG Welding Machine",
       description:
-        "Our fabrication prowess extends to various metals with two MIG welding machines.  These versatile machines tackle steel, aluminum, and stainless steel, ensuring strong and precise welds for your project needs.",
+        "Our fabrication unit is equipped with five advanced MIG welding machines that provide high-quality and efficient welding solutions. These machines are designed to deliver strong, clean, and precise welds on a variety of materials, including mild steel, stainless steel, and aluminum. With stable arc performance and excellent control over heat input, they ensure consistent weld quality while minimizing defects. Their versatility allows us to handle both light and heavy fabrication tasks, making them ideal for producing durable and reliable welded components across diverse applications.",
       display: (
         <Image
           src="/MIGWeldingSetup.png"
